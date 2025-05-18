@@ -10,6 +10,14 @@
 </head>
 <body>
 
+    <div id="phone-popup" class="contact-popup">
+        +34 669 582 875
+    </div>
+    <div id="email-popup" class="contact-popup">
+        gaudiosomarcojuan@gmail.com
+    </div>
+
+
     <header>
         <div class="container header-content">
             <div class="contact-icons left">
@@ -127,6 +135,55 @@
             <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneIcon = document.getElementById('phone-icon');
+            const emailIcon = document.getElementById('email-icon');
+            const phonePopup = document.getElementById('phone-popup');
+            const emailPopup = document.getElementById('email-popup');
+
+            // Function to hide all popups
+            function hideAllPopups() {
+                phonePopup.classList.remove('visible');
+                emailPopup.classList.remove('visible');
+            }
+
+            // Toggle phone popup on click
+            phoneIcon.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                // Hide the other popup before showing this one
+                emailPopup.classList.remove('visible');
+                // Toggle visibility for the phone popup
+                phonePopup.classList.toggle('visible');
+            });
+
+            // Toggle email popup on click
+            emailIcon.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                 // Hide the other popup before showing this one
+                phonePopup.classList.remove('visible');
+                 // Toggle visibility for the email popup
+                emailPopup.classList.toggle('visible');
+            });
+
+            // Hide popups when clicking anywhere else on the document
+            document.addEventListener('click', function(event) {
+                // Check if the click target is NOT one of the icons AND NOT inside one of the popups
+                if (!phoneIcon.contains(event.target) && !emailIcon.contains(event.target) &&
+                    !phonePopup.contains(event.target) && !emailPopup.contains(event.target)) {
+                    hideAllPopups();
+                }
+            });
+
+             // Prevent clicks inside the popups from closing them immediately (optional, but good UX)
+             phonePopup.addEventListener('click', function(event){
+                 event.stopPropagation(); // Stop the click event from bubbling up to the document
+             });
+              emailPopup.addEventListener('click', function(event){
+                 event.stopPropagation(); // Stop the click event from bubbling up to the document
+             });
+        });
+    </script>
 
 </body>
 </html>

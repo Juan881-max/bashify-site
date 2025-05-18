@@ -498,3 +498,45 @@ code {
         font-size: 20px;
     }
 }
+
+/* Add styles for the contact popups */
+.contact-popup {
+    position: fixed; /* Fixed positioning relative to the viewport */
+    top: 60px; /* Position below the sticky header (adjust if header height changes) */
+    right: 20px; /* Position from the right edge */
+    background-color: #2c3e50; /* Dark navy blue background (matching footer) */
+    color: #fff; /* White text */
+    padding: 15px 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    z-index: 1001; /* Ensure it's above the header */
+    font-size: 16px;
+    white-space: nowrap; /* Prevent text wrapping */
+
+    /* Initial state: hidden */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth fade transition */
+}
+
+/* State when visible */
+.contact-popup.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Basic responsiveness for popup positioning on small screens */
+@media (max-width: 768px) {
+    .contact-popup {
+        top: auto; /* Remove top positioning */
+        bottom: 20px; /* Position from the bottom */
+        left: 50%; /* Center horizontally */
+        right: auto; /* Remove right positioning */
+        transform: translateX(-50%); /* Adjust for perfect centering */
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    /* Adjust top position slightly if header collapses/changes height */
+    /* This might require more specific media queries depending on your header's responsive behavior */
+}
