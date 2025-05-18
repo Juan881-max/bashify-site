@@ -92,16 +92,19 @@
     </section>
 
     <section class="contact" id="contact"> <!-- Added ID for navigation link -->
+       
         <div class="container contact-content">
              <h2>Contáctanos</h2>
             <div class="contact-form-info">
-                 <form class="contact-form">
-                    <input type="text" placeholder="Nombre" required>
-                    <input type="email" placeholder="Tu dirección de correo electrónico" required>
-                    <input type="tel" placeholder="Teléfono">
-                    <textarea placeholder="Mensaje" rows="5" required></textarea>
-                    <button type="submit" class="btn">ENVIAR MENSAJE</button>
-                 </form>
+             <form class="contact-form" action="https://formspree.io/f/mwpoygzd" method="post">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="email" name="email" placeholder="Tu dirección de correo electrónico" required>
+    <input type="tel" name="telefono" placeholder="Teléfono">
+    <textarea name="mensaje" placeholder="Mensaje" rows="5" required></textarea>
+    <!-- Opcional: Campo honeypot para protección básica contra bots -->
+    <input type="text" name="_gotcha" style="display:none;">
+    <button type="submit" class="btn">ENVIAR MENSAJE</button>
+</form> 
                  <div class="contact-info">
                      <p><strong>Dirección:</strong> Calle Ficticia 123, Ciudad</p>
                      <p><strong>Teléfono:</strong> +123 456 7890</p>
