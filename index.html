@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASHIFY - Programación en Bash Scripting</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Link for icons (example using Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#contact">CONTACTO</a></li> <!-- Added #contact -->
+                    <li><a href="#services">SERVICIOS</a></li> <!-- Added #services -->
+                    <li><a href="#about">SOBRE</a></li> <!-- Added #about -->
+                    <li><a href="#">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h2>BASHIFY - Scripting Power</h2>
+            <p>Domina la Automatización y la Eficiencia en la Línea de Comandos</p>
+            <p class="small-text">Programación en Bash Scripting</p>
+            <a href="#services" class="btn">EXPLORA SCRIPTS</a>
+        </div>
+    </section>
+
+    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
+    <section id="about" class="about animate-on-scroll"> <!-- Added id="about" and class="animate-on-scroll" -->
+        <div class="container about-content">
+            <div class="about-image">
+                <img src="trucos.jpg" alt="Bash Scripting">
+            </div>
+            <div class="about-text">
+                <h2>¿Qué es Bash Scripting?</h2>
+                <p>Bash scripting es una poderosa herramienta para automatizar tareas...</p>
+                <ul>
+                    <li>• Automatización de Tareas</li>
+                    <li>• Administración de Sistemas</li>
+                    <li>• Procesamiento de Datos</li>
+                    <li>• Desarrollo y Pruebas</li>
+                    <li>• Creación de Herramientas Personalizadas</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
+    <section id="services" class="services animate-on-scroll"> <!-- Added id="services" and class="animate-on-scroll" -->
+        <div class="container">
+            <h2>Nuestros Servicios de Aprendizaje</h2>
+            <div class="service-cards">
+                <!-- Puedes añadir animate-on-scroll a cada tarjeta si quieres animarlas individualmente -->
+                <div class="service-card animate-on-scroll">
+                    <img src="a.jpg" alt="Conceptos Fundamentales">
+                    <h3>Conceptos Fundamentales</h3>
+                    <p>Variables, condicionales, bucles, funciones y entrada/salida.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <img src="a.jpg" alt="Técnicas Avanzadas">
+                    <h3>Técnicas Avanzadas</h3>
+                    <p>Expresiones regulares, manejo de errores, procesamiento de texto y comunicación entre scripts.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <img src="b.jpg" alt="Aplicaciones Prácticas">
+                    <h3>Aplicaciones Prácticas</h3>
+                    <p>Scripts para administración de servidores, copias de seguridad, despliegues y análisis de logs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
+    <section id="contact" class="contact animate-on-scroll"> <!-- Added id="contact" and class="animate-on-scroll" -->
+        <div class="container contact-content">
+             <h2>Contáctanos</h2>
+            <div class="contact-form-info">
+                 <form class="contact-form">
+                    <input type="text" placeholder="Nombre" required>
+                    <input type="email" placeholder="Tu dirección de correo electrónico" required>
+                    <input type="tel" placeholder="Teléfono">
+                    <textarea placeholder="Mensaje" rows="5" required></textarea>
+                    <button type="submit" class="btn">ENVIAR MENSAJE</button>
+                 </form>
+                 <div class="contact-info">
+                     <p><strong>Dirección:</strong> Calle Ficticia 123, Ciudad</p>
+                     <p><strong>Teléfono:</strong> +123 456 7890</p>
+                     <p><strong>Email:</strong> info@bashify.com</p>
+                     <p><strong>Horario:</strong> Lunes a Viernes, 9am - 5pm</p>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ENLAZA EL ARCHIVO JAVASCRIPT AQUÍ -->
+    <script src="script.js"></script>
+
+</body>
+</html>
