@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos Fundamentales - BASHIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#contact">CONTACTO</a></li>
+                    <li><a href="index.html#services">SERVICIOS</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h2>Conceptos Fundamentales de Bash Scripting</h2>
+            <p>Para empezar con Bash scripting, es esencial comprender algunos bloques de construcción básicos:</p>
+
+            <h3>Variables</h3>
+            <p>Las variables en Bash se utilizan para almacenar datos. No necesitas declarar el tipo. Para asignar un valor, usas <code>nombre_variable=valor</code> (sin espacios alrededor del <code>=</code>). Para acceder al valor, usas <code>$nombre_variable</code>.</p>
+            <pre><code>#!/bin/bash
+
+nombre="Mundo"
+saludo="Hola, $nombre!"
+
+echo $saludo # Salida: Hola, Mundo!
+echo "Mi nombre es: ${nombre}" # Las llaves son opcionales pero recomendadas para claridad
+</code></pre>
+
+            <h3>Condicionales (if)</h3>
+            <p>Permiten ejecutar código solo si se cumple una condición. Las condiciones se evalúan dentro de corchetes <code>[ ]</code> o doble corchetes <code>[[ ]]</code> (más moderno y flexible).</p>
+            <pre><code>#!/bin/bash
+
+edad=18
+
+if [ "$edad" -ge 18 ]; then
+  echo "Eres mayor de edad."
+elif [ "$edad" -lt 0 ]; then
+  echo "Edad inválida."
+else
+  echo "Eres menor de edad."
+fi
+
+# Ejemplo con strings
+nombre="Juan"
+if [[ "$nombre" == "Juan" ]]; then
+    echo "Hola Juan."
+fi
+</code></pre>
+            <p>Operadores comunes: <code>-eq</code> (igual), <code>-ne</code> (no igual), <code>-lt</code> (menor que), <code>-le</code> (menor o igual), <code>-gt</code> (mayor que), <code>-ge</code> (mayor o igual) para números. <code>==</code> (igual), <code>!=</code> (no igual), <code><</code> (menor lexicográficamente), <code>></code> (mayor lexicográficamente) para strings (usar <code>[[ ]]</code> para <code><</code> y <code>></code>). <code>-f</code> (es archivo), <code>-d</code> (es directorio), <code>-z</code> (string vacío), <code>-n</code> (string no vacío).</p>
+
+            <h3>Bucles (for, while)</h3>
+            <p>Permiten repetir un bloque de código. Los bucles <code>for</code> son útiles para iterar sobre listas o rangos, mientras que los bucles <code>while</code> repiten mientras una condición sea verdadera.</p>
+            <pre><code>#!/bin/bash
+
+# Bucle for (iterando sobre una lista)
+for fruta in manzana banana cereza; do
+  echo "Me gusta la $fruta"
+done
+
+echo ""
+
+# Bucle for (iterando sobre un rango numérico)
+for i in {1..5}; do
+  echo "Número: $i"
+done
+
+echo ""
+
+# Bucle while
+contador=0
+while [ $contador -lt 3 ]; do
+  echo "Contador: $contador"
+  contador=$((contador + 1)) # Aritmética en Bash
+done
+</code></pre>
+
+            <h3>Funciones</h3>
+            <p>Agrupan comandos para reutilizarlos. Pueden aceptar argumentos posicionales ($1, $2, etc.) y devolver un código de salida.</p>
+            <pre><code>#!/bin/bash
+
+# Definición de una función simple
+saludar() {
+  echo "¡Hola desde la función!"
+}
+
+# Definición de una función con argumento
+saludar_a() {
+  if [ -z "$1" ]; then
+    echo "Error: Debes proporcionar un nombre."
+    return 1 # Indica error con código de salida
+  fi
+  echo "Hola, $1!"
+  return 0 # Indica éxito
+}
+
+# Llamar a las funciones
+saludar
+saludar_a "Bash"
+
+if saludar_a; then # La función fallará y el if será falso
+    echo "Éxito inesperado"
+else
+    echo "La función falló como se esperaba (sin nombre)."
+fi
+</code></pre>
+
+            <h3>Entrada/Salida (Input/Output)</h3>
+            <p>Bash interactúa con el usuario y otros comandos a través de la entrada estándar (stdin), la salida estándar (stdout) y la salida de error estándar (stderr).</p>
+            <ul>
+                <li><code>echo</code>: Imprime texto en stdout.</li>
+                <li><code>read</code>: Lee una línea de stdin y la guarda en una variable.</li>
+                <li>Redirecciones (<code>></code>, <code>>></code>, <code><</code>, <code>2></code>, etc.): Cambian el destino o la fuente de I/O.</li>
+                <li>Pipes (<code>|</code>): Conectan la stdout de un comando con la stdin de otro.</li>
+            </ul>
+             <pre><code>#!/bin/bash
+
+echo "Introduce tu edad:"
+read edad # Lee la entrada y la guarda en la variable 'edad'
+
+echo "Tienes $edad años." > edad_info.txt # Escribe la salida en un archivo (sobrescribe)
+echo "Información guardada en edad_info.txt"
+
+echo "Este es un error." >&2 # Escribe un mensaje a stderr
+
+# Ejemplo de pipe
+ls -l | grep ".sh" # Lista archivos y filtra las líneas que contienen ".sh"
+</code></pre>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#services">Servicios</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

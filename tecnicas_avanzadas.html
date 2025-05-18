@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas Avanzadas - BASHIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#contact">CONTACTO</a></li>
+                    <li><a href="index.html#services">SERVICIOS</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+            </div>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h2>Técnicas Avanzadas en Bash Scripting</h2>
+            <p>Una vez dominados los conceptos básicos, puedes explorar técnicas más potentes para resolver problemas complejos y crear scripts robustos.</p>
+
+            <h3>Expresiones Regulares (Regex)</h3>
+            <p>Las expresiones regulares son patrones para buscar y manipular texto. Bash las utiliza a menudo junto con herramientas como <code>grep</code>, <code>sed</code> y <code>awk</code>, o en condiciones avanzadas con <code>[[ ... =~ ... ]]</code>.</p>
+            <pre><code>#!/bin/bash
+
+texto="Bash scripting es genial, la version es 5.0"
+
+# Buscar líneas que contienen "scripting" (ignorando mayúsculas/minúsculas)
+echo "$texto" | grep -i "scripting"
+
+# Buscar líneas que contienen un número de versión (patrón d.d)
+echo "$texto" | grep -E "[0-9]+\.[0-9]+" # -E for extended regex
+
+# Usando [[ ... =~ ... ]] en una condición
+if [[ "$texto" =~ [0-9]+\.[0-9]+ ]]; then
+    echo "El texto contiene un número de versión."
+fi
+</code></pre>
+
+            <h3>Manejo de Errores</h3>
+            <p>Es crucial que los scripts manejen errores de forma elegante para evitar comportamientos inesperados o fallos silenciosos.</p>
+            <ul>
+                <li><code>set -e</code>: Sale inmediatamente si un comando termina con un código de salida distinto de cero.</li>
+                <li><code>set -u</code>: Trata las variables no definidas como un error.</li>
+                <li><code>trap 'comandos' SEÑAL</code>: Ejecuta comandos cuando recibe una señal (ej. EXIT, ERR, INT para interrupción).</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Sale si cualquier comando falla
+set -e
+# Sale si usas una variable no definida
+set -u
+
+# Define una función que se ejecutará al salir (éxito o error)
+cleanup() {
+  echo "Limpieza terminada."
+  # Puedes añadir comandos de limpieza aquí
+}
+trap cleanup EXIT
+
+# Define una función que se ejecutará si ocurre un error
+handle_error() {
+  echo "Error detectado en línea $LINENO."
+  # Puedes añadir lógica para manejar errores específicos
+}
+trap handle_error ERR
+
+
+echo "Inicio del script."
+
+# Este comando fallará si el directorio no existe y set -e está activo
+# rm /directorio/que/no/existe/archivo.txt
+
+# Este comando usará una variable no definida y fallará con set -u
+# echo "Variable: $variable_no_definida"
+
+echo "Fin del script exitoso." # Solo se alcanza si no hay errores
+</code></pre>
+
+            <h3>Procesamiento de Texto con Herramientas de Línea de Comandos</h3>
+            <p>Bash se integra perfectamente con potentes herramientas como <code>cut</code>, <code>sort</code>, <code>uniq</code>, <code>awk</code>, <code>sed</code> para manipular datos basados en texto.</p>
+             <pre><code>#!/bin/bash
+
+datos="campo1,campo2,campo3\nlinea2_campo1,linea2_campo2,linea2_campo3"
+
+echo -e "$datos" > data.csv # Guardar datos en un archivo
+
+# Extraer la segunda columna (separada por coma) usando cut
+echo "Segunda columna:"
+cut -d',' -f2 data.csv
+
+# Ordenar líneas (alfabéticamente por defecto)
+echo "Lineas ordenadas:"
+echo -e "beta\nalpha\ngamma" | sort
+
+# Procesar texto línea por línea con awk
+# Imprimir la primera y tercera columna (separadas por coma)
+echo "Awk - Columnas 1 y 3:"
+awk -F',' '{ print $1, $3 }' data.csv
+
+# Reemplazar texto con sed (cambiar 'campo' por 'valor')
+echo "Sed - Reemplazo:"
+echo "$datos" | sed 's/campo/valor/g' # 'g' for global replacement
+</code></pre>
+            <p><strong>Nota:</strong> Estas herramientas son muy poderosas y tienen sus propios lenguajes o sintaxis complejas.</p>
+
+            <h3>Comunicación entre Scripts</h3>
+            <p>Los scripts a menudo necesitan interactuar entre sí o con el entorno.</p>
+            <ul>
+                <li><strong>Variables de Entorno:</strong> Exportar variables para que estén disponibles para scripts hijos.</li>
+                <li><strong>Pipes:</strong> Conectar la salida estándar de un script con la entrada estándar de otro.</li>
+                <li><strong>Archivos Temporales:</strong> Compartir datos a través de archivos (usando <code>mktemp</code> para crear nombres seguros).</li>
+                <li><strong>Códigos de Salida:</strong> Un script padre puede verificar el éxito o fallo de un script hijo usando <code>$?</code>.</li>
+            </ul>
+             <pre><code>#!/bin/bash
+
+# Script Padre (parent.sh)
+
+# Exportar una variable
+export VAR_GLOBAL="Hola desde el padre"
+
+echo "Llamando a script hijo..."
+./child.sh # Ejecutar el script hijo
+
+echo "El script hijo terminó con código de salida: $?"
+
+# Usando pipes para enviar datos al hijo
+echo "Dato para el hijo" | ./child_pipe.sh
+
+echo "Padre terminado."
+</code></pre>
+             <pre><code>#!/bin/bash
+
+# Script Hijo (child.sh)
+
+# Acceder a la variable global exportada por el padre
+echo "Script hijo: VAR_GLOBAL es '$VAR_GLOBAL'"
+
+# Terminar con un código de salida
+exit 5 # Un código de salida diferente de 0
+</code></pre>
+            <pre><code>#!/bin/bash
+
+# Script Hijo que lee de stdin (child_pipe.sh)
+
+echo "Script hijo (pipe): Leyendo de stdin..."
+read dato_recibido
+echo "Script hijo (pipe): Recibido: '$dato_recibido'"
+</code></pre>
+             <p>Para probar los ejemplos de comunicación, guarda el primer script como <code>parent.sh</code>, el segundo como <code>child.sh</code> y el tercero como <code>child_pipe.sh</code>. Dales permisos de ejecución (<code>chmod +x parent.sh child.sh child_pipe.sh</code>) y ejecuta <code>./parent.sh</code>.</p>
+
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#services">Servicios</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+Use code with caution.
+Html
+File 6: aplicaciones_practicas.html
+Explains practical applications of Bash scripting.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicaciones Prácticas - BASHIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#contact">CONTACTO</a></li>
+                    <li><a href="index.html#services">SERVICIOS</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h2>Aplicaciones Prácticas de Bash Scripting</h2>
+            <p>Bash scripting es indispensable para muchas tareas en entornos de servidor y desarrollo. Aquí se detallan algunas aplicaciones comunes:</p>
+
+            <h3>Administración de Servidores</h3>
+            <p>Los administradores de sistemas utilizan Bash a diario para automatizar tareas repetitivas en servidores Linux/Unix.</p>
+            <ul>
+                <li><strong>Gestión de Usuarios:</strong> Crear, modificar o eliminar usuarios y grupos.</li>
+                <li><strong>Monitorización:</strong> Scripts para comprobar el uso de CPU, memoria, disco; verificar si los servicios están activos.</li>
+                <li><strong>Gestión de Logs:</strong> Rotar, comprimir o analizar archivos de log del sistema y aplicaciones.</li>
+                <li><strong>Configuración del Sistema:</strong> Automatizar la instalación de software, configuración de red, ajustes del firewall.</li>
+                <li><strong>Tareas Programadas:</strong> Usar Cron o systemd timers para ejecutar scripts a intervalos regulares.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Verificar si un servicio está activo
+servicio="apache2" # o "nginx", "mysql", etc.
+
+if systemctl is-active --quiet "$servicio"; then
+    echo "El servicio $servicio está activo."
+else
+    echo "El servicio $servicio NO está activo."
+    # Opcional: Reiniciar el servicio
+    # sudo systemctl restart "$servicio"
+fi
+</code></pre>
+
+            <h3>Copias de Seguridad (Backups)</h3>
+            <p>Automatizar copias de seguridad es una de las tareas más críticas para cualquier sistema.</p>
+            <ul>
+                <li><strong>Copias Locales:</strong> Scripts que comprimen directorios (<code>tar</code>, <code>zip</code>) y los copian a otra ubicación en el mismo servidor o en un almacenamiento local adjunto.</li>
+                <li><strong>Copias Remotas:</strong> Usar <code>scp</code> o <code>rsync</code> para transferir copias de seguridad a servidores remotos de forma segura.</li>
+                <li><strong>Backups de Bases de Datos:</strong> Scripts que usan herramientas como <code>mysqldump</code> o <code>pg_dump</code> para crear copias de bases de datos.</li>
+                <li><strong>Rotación de Backups:</strong> Eliminar copias de seguridad antiguas para liberar espacio.</li>
+            </ul>
+             <pre><code>#!/bin/bash
+
+# Ejemplo: Backup simple de un directorio usando tar y gzip
+SOURCE_DIR="/var/www/html" # Directorio a respaldar
+BACKUP_DIR="/backup/web" # Directorio de destino
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="web_backup_${TIMESTAMP}.tar.gz"
+
+mkdir -p "$BACKUP_DIR"
+
+echo "Creando copia de seguridad de $SOURCE_DIR..."
+tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$SOURCE_DIR"
+
+if [ $? -eq 0 ]; then
+    echo "Copia de seguridad creada exitosamente: $BACKUP_DIR/$BACKUP_FILE"
+else
+    echo "Error al crear la copia de seguridad."
+fi
+</code></pre>
+
+
+            <h3>Despliegues (Deployments)</h3>
+            <p>Automatizar el proceso de llevar código de desarrollo a producción.</p>
+            <ul>
+                <li><strong>Transferencia de Archivos:</strong> Copiar código a través de SSH (<code>scp</code>, <code>rsync</code>).</li>
+                <li><strong>Actualización de Dependencias:</strong> Ejecutar comandos como <code>npm install</code>, <code>pip install</code>, <code>composer install</code> en el servidor remoto.</li>
+                <li><strong>Reiniciar Servicios:</strong> Reiniciar servidores web o de aplicaciones después de un despliegue.</li>
+                <li><strong>Gestión de Versiones:</strong> Usar Git para obtener la última versión del código.</li>
+                <li><strong>Rollbacks:</strong> Scripts para volver a una versión anterior en caso de problemas.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Despliegue simple con rsync
+USER="tu_usuario_ssh"
+HOST="tu_servidor.com"
+SOURCE_PATH="/ruta/local/del/proyecto/"
+DEST_PATH="/ruta/remota/del/servidor/web/"
+
+echo "Iniciando despliegue a $HOST..."
+
+# Usar rsync para sincronizar archivos
+rsync -avz "$SOURCE_PATH" "$USER@$HOST:$DEST_PATH" --delete
+
+if [ $? -eq 0 ]; then
+    echo "Despliegue exitoso."
+    # Ejemplo: Opcional, reiniciar un servicio en el servidor remoto
+    # ssh "$USER@$HOST" "sudo systemctl restart tu_servicio_app.service"
+else
+    echo "Error durante el despliegue."
+fi
+</code></pre>
+
+            <h3>Análisis de Logs</h3>
+            <p>Los archivos de log contienen información vital sobre el comportamiento del sistema y las aplicaciones.</p>
+            <ul>
+                <li><strong>Filtrado:</strong> Usar <code>grep</code> para encontrar entradas específicas (ej. errores, advertencias, peticiones de una IP).</li>
+                <li><strong>Extracción de Datos:</strong> Usar <code>awk</code> o <code>cut</code> para extraer campos específicos (ej. timestamp, IP, URL de logs web).</li>
+                <li><strong>Reportes:</strong> Scripts que procesan logs para generar resúmenes, contar ocurrencias, identificar patrones.</li>
+                <li><strong>Monitorización en Tiempo Real:</strong> Usar <code>tail -f</code> combinado con otros comandos para ver logs a medida que se escriben.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Contar errores en un archivo de log
+LOG_FILE="/var/log/syslog" # o "/var/log/apache2/error.log", etc.
+
+if [ ! -f "$LOG_FILE" ]; then
+    echo "Error: Archivo de log '$LOG_FILE' no encontrado."
+    exit 1
+fi
+
+echo "Analizando errores en $LOG_FILE..."
+
+# Contar líneas que contienen la palabra "error" (ignorando mayúsculas/minúsculas)
+error_count=$(grep -ic "error" "$LOG_FILE")
+
+echo "Se encontraron $error_count entradas de error."
+
+# Mostrar las últimas 10 líneas que contienen la palabra "error"
+echo "Últimos 10 errores:"
+grep -i "error" "$LOG_FILE" | tail -n 10
+</code></pre>
+            <p>Estas son solo algunas de las muchas formas en que Bash scripting se aplica en escenarios del mundo real, mejorando la eficiencia y la capacidad de automatización.</p>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#services">Servicios</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

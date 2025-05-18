@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explora Scripts - BASHIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#contact">CONTACTO</a></li>
+                    <li><a href="index.html#services">SERVICIOS</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h2>Explora Scripts Bash</h2>
+            <p>Aquí encontrarás algunos ejemplos prácticos de scripts Bash que te ayudarán a entender cómo automatizar tareas comunes.</p>
+
+            <h3>1. Script para Actualizar el Sistema</h3>
+            <p>Este script simple actualiza la lista de paquetes e instala las actualizaciones pendientes en sistemas basados en Debian/Ubuntu.</p>
+            <pre><code>#!/bin/bash
+
+# Script para actualizar el sistema (Debian/Ubuntu)
+
+echo "Actualizando lista de paquetes..."
+sudo apt update
+
+echo "Aplicando actualizaciones disponibles..."
+sudo apt upgrade -y
+
+echo "Limpiando paquetes obsoletos..."
+sudo apt autoremove -y
+
+echo "Sistema actualizado."</code></pre>
+            <p><strong>Explicación:</strong>
+            <ul>
+                <li><code>#!/bin/bash</code>: Shebang, indica que el script debe ejecutarse con Bash.</li>
+                <li><code>echo "..."</code>: Muestra mensajes en la terminal.</li>
+                <li><code>sudo apt update</code>: Actualiza la lista de paquetes disponibles.</li>
+                <li><code>sudo apt upgrade -y</code>: Instala las actualizaciones. El flag <code>-y</code> responde 'yes' automáticamente a las preguntas.</li>
+                <li><code>sudo apt autoremove -y</code>: Elimina paquetes que ya no son necesarios.</li>
+            </ul>
+            </p>
+
+            <h3>2. Script para Buscar Archivos por Nombre</h3>
+            <p>Busca un archivo por nombre (ignorando mayúsculas/minúsculas) en un directorio específico o en todo el sistema.</p>
+             <pre><code>#!/bin/bash
+
+# Script para buscar un archivo por nombre
+
+read -p "Introduce el nombre del archivo a buscar: " file_name
+read -p "Introduce el directorio donde buscar (deja vacío para buscar en todo el sistema /): " search_dir
+
+if [ -z "$search_dir" ]; then
+    search_dir="/"
+fi
+
+echo "Buscando '$file_name' en '$search_dir'..."
+
+# Usamos 'find' para buscar. -iname busca sin distinguir mayúsculas/minúsculas.
+find "$search_dir" -iname "$file_name" 2>/dev/null</code></pre>
+            <p><strong>Explicación:</strong>
+            <ul>
+                <li><code>read -p "..." var</code>: Pide al usuario que introduzca texto y lo guarda en la variable <code>var</code>.</li>
+                <li><code>[ -z "$var" ]</code>: Condicional que verifica si la variable <code>var</code> está vacía.</li>
+                <li><code>find "$dir" -iname "$name"</code>: El comando <code>find</code> busca archivos. <code>-iname</code> permite buscar ignorando mayúsculas/minúsculas.</li>
+                <li><code>2>/dev/null</code>: Redirige los errores (como permisos denegados) para que no llenen la pantalla.</li>
+            </ul>
+            </p>
+
+            <h3>3. Script de Copia de Seguridad Simple (archivo)</h3>
+            <p>Crea una copia de seguridad de un archivo específico, añadiendo la fecha actual al nombre.</p>
+             <pre><code>#!/bin/bash
+
+# Script de copia de seguridad simple
+
+source_file="/ruta/a/tu/archivo.txt" # CAMBIA ESTO
+backup_dir="/ruta/a/tu/directorio_backup" # CAMBIA ESTO
+
+# Verifica si el archivo de origen existe
+if [ ! -f "$source_file" ]; then
+  echo "Error: El archivo de origen '$source_file' no existe."
+  exit 1
+fi
+
+# Crea el directorio de backup si no existe
+if [ ! -d "$backup_dir" ]; then
+  mkdir -p "$backup_dir"
+  echo "Directorio de backup creado: $backup_dir"
+fi
+
+# Obtiene la fecha actual en formato YYYY-MM-DD_HHMMSS
+timestamp=$(date +"%Y-%m-%d_%H%M%S")
+
+# Extrae el nombre del archivo
+file_name=$(basename "$source_file")
+
+# Crea el nombre del archivo de backup
+backup_file="$backup_dir/${file_name}.${timestamp}.bak"
+
+echo "Copiando '$source_file' a '$backup_file'..."
+
+# Realiza la copia
+cp "$source_file" "$backup_file"
+
+if [ $? -eq 0 ]; then
+  echo "Copia de seguridad exitosa: $backup_file"
+else
+  echo "Error: Falló la copia de seguridad."
+fi</code></pre>
+            <p><strong>Explicación:</strong>
+            <ul>
+                <li><code>! -f "$file"</code>: Verifica si el archivo NO existe.</li>
+                <li><code>! -d "$dir"</code>: Verifica si el directorio NO existe.</li>
+                <li><code>mkdir -p "$dir"</code>: Crea un directorio y todos sus directorios padres si no existen.</li>
+                <li><code>$(date +"%Y-%m-%d_%H%M%S")</code>: Ejecuta el comando <code>date</code> con un formato específico y captura su salida.</li>
+                <li><code>basename "$path"</code>: Extrae solo el nombre del archivo de una ruta.</li>
+                <li><code>cp "$src" "$dest"</code>: Copia un archivo.</li>
+                <li><code>$?</code>: Contiene el código de salida del último comando ejecutado (0 si fue exitoso, diferente de 0 si hubo error).</li>
+            </ul>
+            </p>
+
+             <h3>4. Script para Mostrar Espacio en Disco</h3>
+            <p>Muestra el espacio en disco de manera legible para humanos.</p>
+            <pre><code>#!/bin/bash
+
+# Script para mostrar espacio en disco
+
+echo "Espacio en disco:"
+df -h</code></pre>
+            <p><strong>Explicación:</strong>
+            <ul>
+                <li><code>df -h</code>: El comando <code>df</code> reporta el uso del espacio en disco. El flag <code>-h</code> muestra los tamaños en formato legible (Human-readable), como KB, MB, GB.</li>
+            </ul>
+            </p>
+
+            <h3>5. Script Básico para Tarea Cron (Ejemplo)</h3>
+            <p>Este script no se ejecuta directamente, sino que está diseñado para ser llamado por Cron. Por ejemplo, podría registrar la fecha y hora en un archivo cada minuto.</p>
+             <pre><code>#!/bin/bash
+
+# Script para ser ejecutado por cron
+# Guarda la fecha y hora actual en un archivo de log
+
+log_file="/ruta/a/tu/cron.log" # CAMBIA ESTO
+
+# Asegúrate de que el directorio del log exista
+log_dir=$(dirname "$log_file")
+mkdir -p "$log_dir"
+
+echo "Tarea cron ejecutada en: $(date)" >> "$log_file"
+echo "Entrada añadida al log: $log_file" # Este mensaje se verá si cron está configurado para enviar output por email
+</code></pre>
+            <p><strong>Explicación:</strong>
+            <ul>
+                <li><code>$(dirname "$path")</code>: Extrae la parte del directorio de una ruta.</li>
+                <li><code>>> "$file"</code>: Redirige la salida del comando y la *añade* al final del archivo especificado. Si usas <code>></code> en lugar de <code>>></code>, el archivo se sobrescribirá cada vez.</li>
+                <li>Para configurar esto en cron, ejecutarías <code>crontab -e</code> y añadirías una línea como:<br>
+                <code>* * * * * /bin/bash /ruta/a/tu/script_cron.sh</code><br>
+                (Esto ejecutaría el script cada minuto).</li>
+            </ul>
+            </p>
+
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#services">Servicios</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -18,10 +18,10 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#contact">CONTACTO</a></li> <!-- Added #contact -->
-                    <li><a href="#services">SERVICIOS</a></li> <!-- Added #services -->
-                    <li><a href="#about">SOBRE</a></li> <!-- Added #about -->
-                    <li><a href="#">INICIO</a></li>
+                    <li><a href="#contact">CONTACTO</a></li> <!-- Link to Contact section -->
+                    <li><a href="#services">SERVICIOS</a></li> <!-- Link to Services section -->
+                    <li><a href="#">SOBRE</a></li> <!-- Keep as # or link to About section if needed -->
+                    <li><a href="index.html">INICIO</a></li> <!-- Link back to index -->
                 </ul>
             </nav>
             <div class="logo">
@@ -37,19 +37,19 @@
             <h2>BASHIFY - Scripting Power</h2>
             <p>Domina la Automatización y la Eficiencia en la Línea de Comandos</p>
             <p class="small-text">Programación en Bash Scripting</p>
-            <a href="#services" class="btn">EXPLORA SCRIPTS</a>
+            <a href="explora_scripts.html" class="btn">EXPLORA SCRIPTS</a> <!-- LINK UPDATED -->
         </div>
     </section>
 
-    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
-    <section id="about" class="about animate-on-scroll"> <!-- Added id="about" and class="animate-on-scroll" -->
+    <section class="about">
         <div class="container about-content">
             <div class="about-image">
-                <img src="trucos.jpg" alt="Bash Scripting">
+                <!-- Placeholder for an image related to coding/terminal -->
+                <img src="c.jpeg" alt="Bash Scripting">
             </div>
             <div class="about-text">
                 <h2>¿Qué es Bash Scripting?</h2>
-                <p>Bash scripting es una poderosa herramienta para automatizar tareas...</p>
+                <p>Bash scripting es una poderosa herramienta para automatizar tareas, gestionar sistemas y mejorar la eficiencia en entornos Linux, macOS y otros sistemas basados en Unix. Permite combinar comandos, crear flujos de trabajo complejos y ejecutar acciones repetitivas con facilidad.</p>
                 <ul>
                     <li>• Automatización de Tareas</li>
                     <li>• Administración de Sistemas</li>
@@ -61,33 +61,37 @@
         </div>
     </section>
 
-    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
-    <section id="services" class="services animate-on-scroll"> <!-- Added id="services" and class="animate-on-scroll" -->
+    <section class="services" id="services"> <!-- Added ID for navigation link -->
         <div class="container">
             <h2>Nuestros Servicios de Aprendizaje</h2>
             <div class="service-cards">
-                <!-- Puedes añadir animate-on-scroll a cada tarjeta si quieres animarlas individualmente -->
-                <div class="service-card animate-on-scroll">
-                    <img src="a.jpg" alt="Conceptos Fundamentales">
-                    <h3>Conceptos Fundamentales</h3>
-                    <p>Variables, condicionales, bucles, funciones y entrada/salida.</p>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <img src="a.jpg" alt="Técnicas Avanzadas">
-                    <h3>Técnicas Avanzadas</h3>
-                    <p>Expresiones regulares, manejo de errores, procesamiento de texto y comunicación entre scripts.</p>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <img src="b.jpg" alt="Aplicaciones Prácticas">
-                    <h3>Aplicaciones Prácticas</h3>
-                    <p>Scripts para administración de servidores, copias de seguridad, despliegues y análisis de logs.</p>
-                </div>
+                <!-- Wrapped each card in an anchor tag -->
+                <a href="conceptos_fundamentales.html" class="service-card-link"> <!-- LINK UPDATED -->
+                    <div class="service-card">
+                        <img src="a.jpg" alt="Conceptos Fundamentales">
+                        <h3>Conceptos Fundamentales</h3>
+                        <p>Variables, condicionales, bucles, funciones y entrada/salida.</p>
+                    </div>
+                </a>
+                <a href="tecnicas_avanzadas.html" class="service-card-link"> <!-- LINK UPDATED -->
+                    <div class="service-card">
+                        <img src="b.jpg" alt="Técnicas Avanzadas">
+                        <h3>Técnicas Avanzadas</h3>
+                        <p>Expresiones regulares, manejo de errores, procesamiento de texto y comunicación entre scripts.</p>
+                    </div>
+                </a>
+                <a href="aplicaciones_practicas.html" class="service-card-link"> <!-- LINK UPDATED -->
+                    <div class="service-card">
+                        <img src="j.jpg" alt="Aplicaciones Prácticas">
+                        <h3>Aplicaciones Prácticas</h3>
+                        <p>Scripts para administración de servidores, copias de seguridad, despliegues y análisis de logs.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- AÑADE LA CLASE 'animate-on-scroll' A LAS SECCIONES -->
-    <section id="contact" class="contact animate-on-scroll"> <!-- Added id="contact" and class="animate-on-scroll" -->
+    <section class="contact" id="contact"> <!-- Added ID for navigation link -->
         <div class="container contact-content">
              <h2>Contáctanos</h2>
             <div class="contact-form-info">
@@ -111,18 +115,15 @@
     <footer>
         <div class="container footer-content">
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#services">Servicios</a></li>
-                <li><a href="#about">Sobre</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <li><a href="index.html">Inicio</a></li> <!-- Link back to index -->
+                <li><a href="#services">Servicios</a></li> <!-- Link to Services section -->
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#contact">Contacto</a></li> <!-- Link to Contact section -->
                 <li><a href="#">Blog</a></li>
             </ul>
             <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
         </div>
     </footer>
-
-    <!-- ENLAZA EL ARCHIVO JAVASCRIPT AQUÍ -->
-    <script src="script.js"></script>
 
 </body>
 </html>

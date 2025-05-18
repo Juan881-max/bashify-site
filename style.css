@@ -6,27 +6,27 @@
 }
 
 body {
-    font-family: sans-serif; /* Use a common sans-serif font */
+    font-family: sans-serif;
     line-height: 1.6;
-    background-color: #f8f8f8; /* Light background */
+    background-color: #f4f7f6; /* Very light cool grey/blue background */
     color: #333;
 }
 
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: 0 auto; /* Center the container */
-    padding: 0 20px; /* Add some padding on the sides */
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Header Styles */
 header {
-    background-color: #fff;
+    background-color: #ffffff; /* White header */
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Make header sticky */
+    position: sticky;
     top: 0;
-    z-index: 1000; /* Ensure it's above other content */
+    z-index: 1000;
 }
 
 .header-content {
@@ -37,8 +37,7 @@ header {
 
 .logo h1 {
     font-size: 24px;
-    /* CAMBIO DE COLOR: De verde a un azul profesional */
-    color: #1a7fa0; /* Un teal azulado */
+    color: #0077cc; /* A clear, professional blue */
     margin: 0;
 }
 
@@ -46,7 +45,7 @@ header {
      font-size: 14px;
      color: #555;
      display: block;
-     margin-top: -5px; /* Adjust spacing */
+     margin-top: -5px;
 }
 
 
@@ -68,8 +67,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    /* CAMBIO DE COLOR: De verde a un azul ligeramente más oscuro para hover */
-    color: #2980b9; /* Un azul más estándar para hover */
+    color: #0077cc; /* Highlight color on hover */
 }
 
 .contact-icons a {
@@ -84,21 +82,20 @@ nav ul li a:hover {
 }
 
 .contact-icons a:hover {
-    /* CAMBIO DE COLOR: De verde a un azul ligeramente más oscuro para hover */
-    color: #2980b9;
+    color: #0077cc;
 }
 
 
 /* Hero Section Styles */
 .hero {
-    /* CAMBIO DE IMAGEN: USA LA RUTA A TU PROPIA IMAGEN DE FONDO */
-    background-image: url('c.jpg'); /* Reemplaza 'images/bash-hero-background.jpg' con la ruta a tu archivo */
+    /* Keep the original background image concept, maybe update URL */
+    background-image: url('trucos.jpg'); /* Darker blue placeholder */
     background-size: cover;
     background-position: center;
     color: #fff;
     text-align: center;
-    padding: 100px 20px; /* Adjust padding */
-    position: relative; /* Needed for overlay */
+    padding: 100px 20px;
+    position: relative;
 }
 
 .hero-overlay {
@@ -107,20 +104,18 @@ nav ul li a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Puedes ajustar la opacidad si la imagen es muy clara u oscura */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for contrast */
 }
 
 .hero-content {
-    position: relative; /* Bring content above overlay */
+    position: relative;
     z-index: 1;
 }
 
 .hero h2 {
-    font-size: 48px; /* Large title */
+    font-size: 48px;
     margin-bottom: 10px;
-    /* CAMBIO DE COLOR: De verde claro a un azul claro para el título */
-    color: #aaddff; /* Un azul claro que contraste con el fondo oscuro */
+    color: #90ee90; /* Retained light green/cyan for tech feel on dark bg */
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
@@ -137,57 +132,53 @@ nav ul li a:hover {
 
 .btn {
     display: inline-block;
-    /* CAMBIO DE COLOR: De verde a un azul profesional para botones */
-    background-color: #3498db; /* Un azul vibrante pero profesional */
+    background-color: #0077cc; /* Primary button blue */
     color: #fff;
     padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
     font-size: 18px;
     transition: background-color 0.3s ease;
-    border: none; /* For button tag */
-    cursor: pointer; /* For button tag */
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
-    /* CAMBIO DE COLOR: De verde oscuro a un azul oscuro para hover del botón */
-    background-color: #2980b9; /* Un azul más oscuro en hover */
+    background-color: #005fa3; /* Darker blue on hover */
 }
 
 /* About Section (What is Bash Scripting?) */
 .about {
     padding: 60px 0;
-    /* CAMBIO DE COLOR DE FONDO: De verde muy claro a un azul muy claro */
-    background-color: #e0f7fa; /* Un azul muy claro */
+    background-color: #eef7ff; /* Very light blue background */
 }
 
 .about-content {
     display: flex;
-    align-items: center; /* Vertically align items */
-    gap: 40px; /* Space between image and text */
+    align-items: center;
+    gap: 40px;
 }
 
 .about-image {
-    flex: 1; /* Allow image container to grow */
-    min-width: 300px; /* Minimum width for image */
+    flex: 1;
+    min-width: 300px;
     text-align: center;
 }
 
 .about-image img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px; /* Soften corners */
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .about-text {
-    flex: 2; /* Allow text container to grow more */
+    flex: 2;
 }
 
 .about-text h2 {
     font-size: 32px;
-    /* CAMBIO DE COLOR: De verde a un azul profesional */
-    color: #1a7fa0; /* Mismo color que el logo */
+    color: #0077cc; /* Primary blue title */
     margin-bottom: 20px;
 }
 
@@ -196,20 +187,19 @@ nav ul li a:hover {
 }
 
 .about-text ul {
-    list-style: none; /* Remove default bullets */
+    list-style: none;
     padding-left: 0;
 }
 
 .about-text ul li {
     margin-bottom: 8px;
     position: relative;
-    padding-left: 20px; /* Space for custom bullet */
+    padding-left: 20px;
 }
 
 .about-text ul li::before {
-    content: '•'; /* Custom bullet point */
-     /* CAMBIO DE COLOR: De verde a un azul profesional para las viñetas */
-    color: #1a7fa0; /* Mismo color que los títulos */
+    content: '•';
+    color: #0077cc; /* Primary blue bullet point */
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -219,86 +209,95 @@ nav ul li a:hover {
 /* Services Section */
 .services {
     padding: 60px 0;
-    background-color: #fff; /* Fondo blanco, profesional */
+    background-color: #ffffff; /* White background */
     text-align: center;
 }
 
 .services h2 {
     font-size: 32px;
-    /* CAMBIO DE COLOR: De verde a un azul profesional */
-    color: #1a7fa0; /* Mismo color que los títulos */
+    color: #0077cc; /* Primary blue title */
     margin-bottom: 40px;
 }
 
 .service-cards {
     display: flex;
-    justify-content: center; /* Center cards if less than full row */
-    gap: 30px; /* Space between cards */
-    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Style for the anchor wrapping the service card */
+.service-card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    display: block; /* Make the link block-level to contain the card */
+    /* Important: Remove transform and box-shadow from the link, keep them on the inner card */
 }
 
 .service-card {
-    background-color: #f9f9f9; /* Gris muy claro para las tarjetas */
-    border: 1px solid #ddd; /* Borde gris claro */
+    background-color: #f9f9f9; /* Keep light grey for card background */
+    border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    width: 300px; /* Fixed width, adjust as needed or use flex-basis */
+    width: 300px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .service-card:hover {
-    transform: translateY(-10px); /* Lift card on hover */
+    transform: translateY(-10px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .service-card img {
     max-width: 100%;
-    height: 150px; /* Fixed height for consistency, adjust if needed */
-    object-fit: cover; /* Ensure images cover the area */
+    height: 150px;
+    object-fit: cover;
     border-radius: 4px;
     margin-bottom: 15px;
 }
 
 .service-card h3 {
     font-size: 20px;
-    color: #333; /* Negro/gris oscuro para títulos de tarjeta */
+    color: #333;
     margin-bottom: 10px;
 }
 
 .service-card p {
     font-size: 16px;
-    color: #555; /* Gris oscuro para texto de tarjeta */
+    color: #555;
 }
 
 /* Contact Section */
 .contact {
     padding: 60px 0;
-     /* CAMBIO DE COLOR DE FONDO: De verde claro a un azul muy claro */
-    background-color: #e0f7fa; /* Mismo azul muy claro que la sección About */
+    background-color: #d1e7fd; /* Lighter blue background */
 }
 
 .contact h2 {
     font-size: 32px;
-    /* CAMBIO DE COLOR: De verde a un azul profesional */
-    color: #1a7fa0; /* Mismo color que los títulos */
+    color: #0077cc; /* Primary blue title */
     text-align: center;
     margin-bottom: 40px;
 }
 
 .contact-form-info {
     display: flex;
-    gap: 50px; /* Space between form and info */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 50px;
+    flex-wrap: wrap;
 }
 
 .contact-form {
-    flex: 2; /* Form takes more space */
-    min-width: 300px; /* Minimum width for form */
+    flex: 2;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between form fields */
+    gap: 15px;
 }
 
 .contact-form input[type="text"],
@@ -313,19 +312,18 @@ nav ul li a:hover {
 }
 
 .contact-form textarea {
-    resize: vertical; /* Allow vertical resizing */
+    resize: vertical;
 }
 
 .contact-form .btn {
-    align-self: flex-start; /* Align button to the left */
-    /* El color del botón ya se cambió en la regla .btn general */
+    align-self: flex-start;
 }
 
 
 .contact-info {
-    flex: 1; /* Info takes less space */
-    min-width: 250px; /* Minimum width for info */
-    background-color: #fff; /* Fondo blanco para la info de contacto */
+    flex: 1;
+    min-width: 250px;
+    background-color: #ffffff; /* White background */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -333,7 +331,7 @@ nav ul li a:hover {
 
 .contact-info p {
     margin-bottom: 10px;
-    color: #555; /* Gris oscuro para texto de info */
+    color: #555;
 }
 
 .contact-info p:last-child {
@@ -343,8 +341,7 @@ nav ul li a:hover {
 
 /* Footer Styles */
 footer {
-    /* CAMBIO DE COLOR DE FONDO: De verde a un azul oscuro */
-    background-color: #0f4c5c; /* Un azul/teal oscuro, similar al fondo del héroe */
+    background-color: #2c3e50; /* Deep navy blue background */
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -356,7 +353,7 @@ footer {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    flex-wrap: wrap; /* Allow links to wrap */
+    flex-wrap: wrap;
 }
 
 .footer-content ul li {
@@ -365,40 +362,79 @@ footer {
 
 .footer-content ul li a {
     text-decoration: none;
-    color: #fff; /* Texto blanco en fondo oscuro */
+    color: #fff;
     transition: color 0.3s ease;
 }
 
 .footer-content ul li a:hover {
-    /* CAMBIO DE COLOR: De verde claro a un azul claro en hover */
-    color: #aaddff; /* Mismo azul claro que el título del héroe */
+    color: #a3cbe6; /* Lighter blue on hover */
 }
 
-
-/* Estilos para Animación al Scroll */
-/* Estos estilos se mantienen igual, funcionan con cualquier color */
-
-/* Estado Inicial (oculto y ligeramente desplazado hacia abajo) */
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(50px); /* Comienza 50px más abajo */
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Duración y tipo de transición */
+/* Styles for new pages content */
+.page-content {
+    padding: 60px 0;
+    background-color: #f4f7f6; /* Match body background */
 }
 
-/* Estado Final (visible y en su posición normal) */
-.animate-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+.page-content h2 {
+    font-size: 32px;
+    color: #0077cc; /* Primary blue title */
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-/* Puedes añadir retrasos para animar elementos secuencialmente */
-/* Ejemplo: Animar las tarjetas de servicio con un pequeño retraso */
-.service-card.animate-on-scroll {
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+.page-content h3 {
+     font-size: 24px;
+     color: #333;
+     margin-top: 30px;
+     margin-bottom: 15px;
+     border-bottom: 2px solid #eee; /* Subtle separator */
+     padding-bottom: 5px;
 }
+
+.page-content p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.page-content ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.page-content ul li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Styling for code blocks */
+pre {
+    background-color: #eef2f7; /* Very light blue-grey background */
+    border: 1px solid #ddd;
+    border-left: 5px solid #005fa3; /* Darker blue border for code */
+    color: #333;
+    page-break-inside: avoid;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+}
+
+code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: #eef2f7; /* Match pre background for inline code */
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
 
 /* Basic Responsiveness (Example) */
-/* Estos estilos se mantienen igual */
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -406,7 +442,7 @@ footer {
     }
 
     .contact-icons.left {
-        order: 2; /* Move icons below logo on small screens */
+        order: 2;
         margin-top: 10px;
     }
 
@@ -436,18 +472,29 @@ footer {
     .about-text,
     .contact-form,
     .contact-info {
-        flex: none; /* Remove flex growing */
-        width: 100%; /* Take full width */
+        flex: none;
+        width: 100%;
         min-width: auto;
     }
 
     .service-cards {
         flex-direction: column;
-        align-items: center; /* Center single cards */
+        align-items: center;
+    }
+
+    .service-card-link {
+        width: 100%;
+        max-width: 350px;
     }
 
     .service-card {
-         width: 90%; /* Allow cards to be wider on smaller screens */
-         max-width: 350px; /* Prevent cards from getting too wide */
+         width: 100%;
+    }
+
+    .page-content h2 {
+        font-size: 28px;
+    }
+     .page-content h3 {
+        font-size: 20px;
     }
 }
