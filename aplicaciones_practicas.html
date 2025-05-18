@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicaciones Prácticas - BASHIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="contact-icons left">
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#contact">CONTACTO</a></li>
+                    <li><a href="index.html#services">SERVICIOS</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                </ul>
+            </nav>
+            <div class="logo">
+                <h1>BASHIFY</h1>
+                <span>Scripting Power</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h2>Aplicaciones Prácticas de Bash Scripting</h2>
+            <p>Bash scripting es indispensable para muchas tareas en entornos de servidor y desarrollo. Aquí se detallan algunas aplicaciones comunes:</p>
+
+            <h3>Administración de Servidores</h3>
+            <p>Los administradores de sistemas utilizan Bash a diario para automatizar tareas repetitivas en servidores Linux/Unix.</p>
+            <ul>
+                <li><strong>Gestión de Usuarios:</strong> Crear, modificar o eliminar usuarios y grupos.</li>
+                <li><strong>Monitorización:</strong> Scripts para comprobar el uso de CPU, memoria, disco; verificar si los servicios están activos.</li>
+                <li><strong>Gestión de Logs:</strong> Rotar, comprimir o analizar archivos de log del sistema y aplicaciones.</li>
+                <li><strong>Configuración del Sistema:</strong> Automatizar la instalación de software, configuración de red, ajustes del firewall.</li>
+                <li><strong>Tareas Programadas:</strong> Usar Cron o systemd timers para ejecutar scripts a intervalos regulares.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Verificar si un servicio está activo
+servicio="apache2" # o "nginx", "mysql", etc.
+
+if systemctl is-active --quiet "$servicio"; then
+    echo "El servicio $servicio está activo."
+else
+    echo "El servicio $servicio NO está activo."
+    # Opcional: Reiniciar el servicio
+    # sudo systemctl restart "$servicio"
+fi
+</code></pre>
+
+            <h3>Copias de Seguridad (Backups)</h3>
+            <p>Automatizar copias de seguridad es una de las tareas más críticas para cualquier sistema.</p>
+            <ul>
+                <li><strong>Copias Locales:</strong> Scripts que comprimen directorios (<code>tar</code>, <code>zip</code>) y los copian a otra ubicación en el mismo servidor o en un almacenamiento local adjunto.</li>
+                <li><strong>Copias Remotas:</strong> Usar <code>scp</code> o <code>rsync</code> para transferir copias de seguridad a servidores remotos de forma segura.</li>
+                <li><strong>Backups de Bases de Datos:</strong> Scripts que usan herramientas como <code>mysqldump</code> o <code>pg_dump</code> para crear copias de bases de datos.</li>
+                <li><strong>Rotación de Backups:</strong> Eliminar copias de seguridad antiguas para liberar espacio.</li>
+            </ul>
+             <pre><code>#!/bin/bash
+
+# Ejemplo: Backup simple de un directorio usando tar y gzip
+SOURCE_DIR="/var/www/html" # Directorio a respaldar
+BACKUP_DIR="/backup/web" # Directorio de destino
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="web_backup_${TIMESTAMP}.tar.gz"
+
+mkdir -p "$BACKUP_DIR"
+
+echo "Creando copia de seguridad de $SOURCE_DIR..."
+tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$SOURCE_DIR"
+
+if [ $? -eq 0 ]; then
+    echo "Copia de seguridad creada exitosamente: $BACKUP_DIR/$BACKUP_FILE"
+else
+    echo "Error al crear la copia de seguridad."
+fi
+</code></pre>
+
+
+            <h3>Despliegues (Deployments)</h3>
+            <p>Automatizar el proceso de llevar código de desarrollo a producción.</p>
+            <ul>
+                <li><strong>Transferencia de Archivos:</strong> Copiar código a través de SSH (<code>scp</code>, <code>rsync</code>).</li>
+                <li><strong>Actualización de Dependencias:</strong> Ejecutar comandos como <code>npm install</code>, <code>pip install</code>, <code>composer install</code> en el servidor remoto.</li>
+                <li><strong>Reiniciar Servicios:</strong> Reiniciar servidores web o de aplicaciones después de un despliegue.</li>
+                <li><strong>Gestión de Versiones:</strong> Usar Git para obtener la última versión del código.</li>
+                <li><strong>Rollbacks:</strong> Scripts para volver a una versión anterior en caso de problemas.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Despliegue simple con rsync
+USER="tu_usuario_ssh"
+HOST="tu_servidor.com"
+SOURCE_PATH="/ruta/local/del/proyecto/"
+DEST_PATH="/ruta/remota/del/servidor/web/"
+
+echo "Iniciando despliegue a $HOST..."
+
+# Usar rsync para sincronizar archivos
+rsync -avz "$SOURCE_PATH" "$USER@$HOST:$DEST_PATH" --delete
+
+if [ $? -eq 0 ]; then
+    echo "Despliegue exitoso."
+    # Ejemplo: Opcional, reiniciar un servicio en el servidor remoto
+    # ssh "$USER@$HOST" "sudo systemctl restart tu_servicio_app.service"
+else
+    echo "Error durante el despliegue."
+fi
+</code></pre>
+
+            <h3>Análisis de Logs</h3>
+            <p>Los archivos de log contienen información vital sobre el comportamiento del sistema y las aplicaciones.</p>
+            <ul>
+                <li><strong>Filtrado:</strong> Usar <code>grep</code> para encontrar entradas específicas (ej. errores, advertencias, peticiones de una IP).</li>
+                <li><strong>Extracción de Datos:</strong> Usar <code>awk</code> o <code>cut</code> para extraer campos específicos (ej. timestamp, IP, URL de logs web).</li>
+                <li><strong>Reportes:</strong> Scripts que procesan logs para generar resúmenes, contar ocurrencias, identificar patrones.</li>
+                <li><strong>Monitorización en Tiempo Real:</strong> Usar <code>tail -f</code> combinado con otros comandos para ver logs a medida que se escriben.</li>
+            </ul>
+            <pre><code>#!/bin/bash
+
+# Ejemplo: Contar errores en un archivo de log
+LOG_FILE="/var/log/syslog" # o "/var/log/apache2/error.log", etc.
+
+if [ ! -f "$LOG_FILE" ]; then
+    echo "Error: Archivo de log '$LOG_FILE' no encontrado."
+    exit 1
+fi
+
+echo "Analizando errores en $LOG_FILE..."
+
+# Contar líneas que contienen la palabra "error" (ignorando mayúsculas/minúsculas)
+error_count=$(grep -ic "error" "$LOG_FILE")
+
+echo "Se encontraron $error_count entradas de error."
+
+# Mostrar las últimas 10 líneas que contienen la palabra "error"
+echo "Últimos 10 errores:"
+grep -i "error" "$LOG_FILE" | tail -n 10
+</code></pre>
+            <p>Estas son solo algunas de las muchas formas en que Bash scripting se aplica en escenarios del mundo real, mejorando la eficiencia y la capacidad de automatización.</p>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#services">Servicios</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+            <p>© 2023 BASHIFY. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
